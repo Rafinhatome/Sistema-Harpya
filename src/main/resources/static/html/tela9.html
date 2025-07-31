@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Gestão de Usuários</title>
+
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+</head>
+<body>
+
+<div class="container mt-4">
+  <h2>Gestão de Usuários</h2>
+
+  <!-- Botão para Adicionar Usuário -->
+  <div class="d-flex justify-content-end mb-3">
+    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalAddUser">+ Adicionar Usuário</button>
+  </div>
+
+  <!-- Tabela de Usuários -->
+  <table class="table table-bordered table-hover">
+    <thead class="table-light">
+      <tr>
+        <th>Nome</th>
+        <th>Email</th>
+        <th>Status</th>
+        <th>Ações</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- Exemplo de usuário -->
+      <tr>
+        <td>Rafael Tomé</td>
+        <td>rafael@email.com</td>
+        <td><span class="badge bg-success">Ativo</span></td>
+        <td>
+          <button class="btn btn-sm btn-warning" data-bs-toggle="modal" data-bs-target="#modalEditUser">Editar</button>
+          <button class="btn btn-sm btn-secondary" data-bs-toggle="modal" data-bs-target="#modalResetPass">Redefinir Senha</button>
+          <button class="btn btn-sm btn-danger btn-desativar">Desativar</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- Modal: Adicionar Usuário -->
+<div class="modal fade" id="modalAddUser" tabindex="-1" aria-labelledby="modalAddUserLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <form class="modal-content" id="formAddUser">
+      <div class="modal-header">
+        <h5 class="modal-title">Adicionar Novo Usuário</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+      </div>
+      <div class="modal-body">
+        <div class="mb-3">
+          <label class="form-label">Nome</label>
+          <input type="text" class="form-control" placeholder="Nome do usuário" required />
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Email</label>
+          <input type="email" class="form-control" placeholder="Email do usuário" required />
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Senha</label>
+          <input type="password" class="form-control" placeholder="Senha inicial" required />
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-success">Salvar</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Modal: Editar Usuário -->
+<div class="modal fade" id="modalEditUser" tabindex="-1" aria-labelledby="modalEditUserLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <form class="modal-content" id="formEditUser">
+      <div class="modal-header">
+        <h5 class="modal-title">Editar Usuário</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+      </div>
+      <div class="modal-body">
+        <div class="mb-3">
+          <label class="form-label">Nome</label>
+          <input type="text" class="form-control" value="Rafael Tomé" />
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Email</label>
+          <input type="email" class="form-control" value="rafael@email.com" />
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-primary">Atualizar</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Modal: Redefinir Senha -->
+<div class="modal fade" id="modalResetPass" tabindex="-1" aria-labelledby="modalResetPassLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <form class="modal-content" id="formResetPass">
+      <div class="modal-header">
+        <h5 class="modal-title">Redefinir Senha</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+      </div>
+      <div class="modal-body">
+        <label class="form-label">Nova Senha</label>
+        <input type="password" class="form-control" required />
+      </div>
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-danger">Atualizar Senha</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Bootstrap JS (Popper + Bootstrap) -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    // Form Add User
+    document.getElementById('formAddUser').addEventListener('submit', function (e) {
+      e.preventDefault();
+      alert('Usuário adicionado com sucesso!');
+      bootstrap.Modal.getInstance(document.getElementById('modalAddUser')).hide();
+    });
+
+    // Form Edit User
+    document.getElementById('formEditUser').addEventListener('submit', function (e) {
+      e.preventDefault();
+      alert('Usuário atualizado com sucesso!');
+      bootstrap.Modal.getInstance(document.getElementById('modalEditUser')).hide();
+    });
+
+    // Form Reset Password
+    document.getElementById('formResetPass').addEventListener('submit', function (e) {
+      e.preventDefault();
+      alert('Senha redefinida com sucesso!');
+      bootstrap.Modal.getInstance(document.getElementById('modalResetPass')).hide();
+    });
+
+    // Botão Desativar Usuário
+    document.querySelectorAll('.btn-desativar').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        if (confirm('Deseja realmente desativar este usuário?')) {
+          alert('Usuário desativado com sucesso!');
+          // Aqui você pode atualizar a interface para refletir o status desativado
+        }
+      });
+    });
+  });
+
+  document.addEventListener("DOMContentLoaded", function () {
+    const userTable = document.querySelector("table tbody");
+    const addUserForm = document.querySelector("#modalAddUser form");
+
+    addUserForm.addEventListener("submit", function (e) {
+      e.preventDefault();
+
+      const name = this.querySelector('input[placeholder="Nome do usuário"]').value;
+      const email = this.querySelector('input[placeholder="Email do usuário"]').value;
+
+      const newRow = document.createElement("tr");
+      newRow.innerHTML = `
+        <td>${name}</td>
+        <td>${email}</td>
+        <td><span class="badge bg-success">Ativo</span></td>
+        <td>
+          <button class="btn btn-sm btn-warning" data-bs-toggle="modal" data-bs-target="#modalEditUser">Editar</button>
+          <button class="btn btn-sm btn-secondary" data-bs-toggle="modal" data-bs-target="#modalResetPass">Redefinir Senha</button>
+          <button class="btn btn-sm btn-danger btn-deactivate">Desativar</button>
+        </td>
+      `;
+      userTable.appendChild(newRow);
+
+      // Fechar modal manualmente (caso Bootstrap 5 não feche automaticamente)
+      const modal = bootstrap.Modal.getInstance(document.getElementById("modalAddUser"));
+      modal.hide();
+
+      this.reset(); // limpa o formulário
+    });
+
+    // Delegação de evento para botão Desativar
+    userTable.addEventListener("click", function (e) {
+      if (e.target.classList.contains("btn-deactivate")) {
+        const row = e.target.closest("tr");
+        const badge = row.querySelector(".badge");
+        badge.textContent = "Inativo";
+        badge.classList.remove("bg-success");
+        badge.classList.add("bg-secondary");
+        e.target.remove(); // remove o botão "Desativar"
+      }
+    });
+  });
+
+</script>
+
+</body>
+</html>

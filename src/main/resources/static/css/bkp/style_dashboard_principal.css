@@ -1,0 +1,362 @@
+/* RESET */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body, html {
+  width: 100%;
+  overflow-x: hidden;     /* ❌ bloqueia rolagem lateral */
+  overflow-y: auto;       /* ✅ permite rolar para cima e baixo */
+  min-height: 100vh;
+  font-family: Arial, sans-serif;
+}
+
+/* Fundo escuro com overlay e imagem central */
+body {
+  background-color: #0d1c36;
+  background-image: url('../assets/logo.png');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  position: relative;
+}
+
+/* Camada de transparência azul escura */
+.bg-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(13, 28, 54, 0.8);
+  z-index: 0;
+}
+
+/* Centraliza o conteúdo na tela */
+.login-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  position: fixed; /* Fixa o container em relação à janela */
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1;
+}
+
+/* Caixa de login */
+.login-box {
+  background-color: rgba(255, 255, 255, 0.05);
+  padding: 2rem;
+  border-radius: 16px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
+  width: 90%;
+  max-width: 350px;
+  text-align: center;
+}
+
+/* Logo */
+.logo-login {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 50%;
+  margin-bottom: 1.5rem;
+  border: 2px solid white;
+}
+
+/* Inputs */
+input {
+  width: 100%;
+  padding: 0.9rem;
+  margin-bottom: 1rem;
+  border: none;
+  border-radius: 30px;
+  background-color: rgba(255, 255, 255, 0.8);
+  font-size: 1rem;
+  color: #000;
+}
+
+/* Botão de entrar */
+button {
+  width: 100%;
+  padding: 0.9rem;
+  background-color: #1a73e8;
+  border: none;
+  border-radius: 30px;
+  color: white;
+  font-size: 1rem;
+  cursor: pointer;
+  margin-top: 1rem;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #145dc1;
+}
+
+/* Link "esqueci a senha" */
+.esqueci-senha {
+  font-size: 0.9rem;
+  color: white;
+  display: block;
+  margin-top: 0.5rem;
+  text-decoration: none;
+}
+
+/* Link "novo usuário" */
+.novo-usuario {
+  font-size: 0.9rem;
+  color: white;
+  display: block;
+  margin-top: 0.5rem;
+  text-decoration: none;
+}
+
+.esqueci-senha:hover {
+  text-decoration: underline;
+}
+
+/* Responsividade extra */
+@media (min-width: 768px) {
+  .login-box {
+    padding: 3rem;
+  }
+}
+.dashboard-container {
+  background-color: #0d1c36;
+  min-height: 100vh;
+  padding: 1rem;
+  color: white;
+}
+
+.dashboard-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 1rem;
+}
+
+.menu-icon {
+  font-size: 1.8rem;
+  cursor: pointer;
+}
+
+.logo-topo {
+  width: 50px;
+  border-radius: 50%;
+}
+
+.dashboard-box {
+  background-color: rgba(255,255,255,0.08);
+  border-radius: 20px;
+  padding: 1rem;
+  margin-bottom: 2rem;
+  width: 100%;
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+}
+
+.titulo-tabela {
+  position: center;
+  color: #ffffff;
+  font-size: 1.4rem;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+}
+
+.dashboard-grafico {
+  position: relative;
+  aspect-ratio: 16 / 9;
+}
+
+.dashboard-grafico canvas {
+  width: 100% !important;
+  height: 100% !important;
+  display: block;
+  border-radius: 10px;
+}
+
+.titulo-grafico {
+  position: center;
+  color: #ffffff;
+  font-size: 1.4rem;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+}
+
+.dashboard-main {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  align-items: center;
+}
+
+.access-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 0 auto 2rem auto; /* 🔹 centraliza horizontalmente */
+  background-color: rgba(255,255,255,0.05);
+  border-radius: 8px;
+  overflow: hidden;
+  text-size-adjust: 90%; /* 🔹 garante que o texto se ajuste corretamente */
+  table-layout: fixed; /* 🔹 força colunas a usarem espaço proporcional */
+}
+
+.access-table thead {
+  background-color: #3dd4d4;
+  color: #000;
+}
+
+.access-table th, .access-table td {
+  padding: 0.75rem;
+  text-align: center;
+  border-bottom: 1px solid #ccc;
+}
+
+canvas#acessosGrafico {
+  max-width: 100%;
+  height: 250px;
+  width: 100%;
+}
+
+.logo-wrapper {
+  position: relative;
+}
+
+.dropdown-menu {
+  position: absolute;
+  top: 60px;
+  right: 0;
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  padding: 0.5rem 1rem;
+  display: none;
+  z-index: 100;
+  backdrop-filter: blur(5px);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  
+  
+}
+
+.dropdown-menu ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.dropdown-menu li {
+  margin: 0.0rem 0;
+  padding: 0%;
+}
+
+.dropdown-menu a {
+  color: white;
+  text-decoration: none;
+}
+
+.dropdown-menu a:hover {
+  text-decoration: underline;
+}
+
+.menu-wrapper {
+  position: relative;
+}
+
+#menuLateral {
+  position: absolute;
+  top: 60px;
+  left: 0;
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  padding: 0.5rem 1rem;
+  display: none;
+  z-index: 100;
+  backdrop-filter: blur(5px);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+}
+
+#menuLateral ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+#menuLateral li {
+  margin: 0.0rem 0;
+  padding: 0%;
+
+}
+
+#menuLateral a {
+  color: white;
+  text-decoration: none;
+  
+}
+
+#menuLateral a:hover {
+  text-decoration: underline;
+  
+}
+
+.menu-wrapper {
+  position: relative;
+  
+}
+
+#menuLateral {
+  position: absolute;
+  top: 50px;
+  left: 0;
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  padding: 0.5rem 4rem;
+  display: none;
+  z-index: 100;
+  backdrop-filter: blur(5px);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+}
+
+#menuLateral ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.0rem; /* Diminui o espaço entre as linhas */
+}
+
+#menuLateral li {
+  margin: 0.5rem 0;
+}
+
+#menuLateral a {
+  color: white;
+  text-decoration: none;
+}
+
+#menuLateral a:hover {
+  text-decoration: underline;
+}
+
+/* Ajuste para telas pequenas (evitar overflow em inputs) */
+@media (max-height: 600px) {
+  .login-box {
+    padding: 1.5rem;
+  }
+  .logo-login {
+    width: 60px;
+    height: 60px;
+  }
+  input, button {
+    padding: 0.7rem;
+    font-size: 0.9rem;
+  }
+}

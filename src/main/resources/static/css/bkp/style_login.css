@@ -1,0 +1,128 @@
+/* RESET */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body, html {
+  width: 100%;
+  overflow-x: hidden;     /* ❌ bloqueia rolagem lateral */
+  overflow-y: auto;       /* ✅ permite rolar para cima e baixo */
+  min-height: 100vh;
+  font-family: Arial, sans-serif;
+}
+
+/* Fundo escuro com overlay e imagem central */
+body {
+  background-color: #0d1c36;
+  background-image: url('../assets/logo.png');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  position: relative;
+}
+
+/* Camada de transparência azul escura */
+.bg-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(13, 28, 54, 0.8);
+  z-index: 0;
+}
+
+/* Centraliza o conteúdo na tela */
+.login-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  position: fixed; /* Fixa o container em relação à janela */
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1;
+}
+
+/* Caixa de login */
+.login-box {
+  background-color: rgba(255, 255, 255, 0.05);
+  padding: 2rem;
+  border-radius: 16px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
+  width: 90%;
+  max-width: 350px;
+  text-align: center;
+}
+
+/* Logo */
+.logo-login {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 50%;
+  margin-bottom: 1.5rem;
+  border: 2px solid white;
+}
+
+/* Inputs */
+input {
+  width: 100%;
+  padding: 0.9rem;
+  margin-bottom: 1rem;
+  border: none;
+  border-radius: 30px;
+  background-color: rgba(255, 255, 255, 0.8);
+  font-size: 1rem;
+  color: #000;
+}
+
+/* Botão de entrar */
+button {
+  width: 100%;
+  padding: 0.9rem;
+  background-color: #1a73e8;
+  border: none;
+  border-radius: 30px;
+  color: white;
+  font-size: 1rem;
+  cursor: pointer;
+  margin-top: 1rem;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #145dc1;
+}
+
+/* Link "esqueci a senha" */
+.esqueci-senha {
+  font-size: 0.9rem;
+  color: white;
+  display: block;
+  margin-top: 0.5rem;
+  text-decoration: none;
+}
+
+/* Link "novo usuário" */
+.novo-usuario {
+  font-size: 0.9rem;
+  color: white;
+  display: block;
+  margin-top: 0.5rem;
+  text-decoration: none;
+}
+
+.esqueci-senha:hover {
+  text-decoration: underline;
+}
+
+/* Responsividade extra */
+@media (min-width: 768px) {
+  .login-box {
+    padding: 3rem;
+  }
+}

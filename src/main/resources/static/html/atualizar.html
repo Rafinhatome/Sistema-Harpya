@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="index.html">Lista produtos</a></li>
+                <li><a href="inserir.html">Inserir produtos</a></li>
+                <li><a href="deletar.html">Deletar produtos</a></li>
+                <li><a href="atualizar.html">Atualizar produtos</a></li>
+            </ul>
+        </nav>
+    </header>
+<form id="formulario">
+    <h1>Inserir Produto</h1>
+    <label for="id">ID:</label>
+    <input type="number" id="id" name="id" required>
+
+    <label for="name">Nome:</label>
+    <input type="text" id="name" name="name" required>
+    
+    <label for="price">Preço:</label>
+    <input type="number" id="preco" step="0.01" name="preco" required>
+    
+    <button style="cursor: pointer;">Atualizar Produto</button>
+    <button type="reset" style="cursor: pointer;">Limpar</button>
+    
+</form>
+<script src="../js/atualizar.js"></script>
+</body>
+</html>
