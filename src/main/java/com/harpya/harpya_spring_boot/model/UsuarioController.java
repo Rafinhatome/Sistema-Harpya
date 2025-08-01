@@ -1,51 +1,62 @@
 package com.harpya.harpya_spring_boot.model;
 
+import com.harpya.harpya_spring_boot.service.UsuarioService;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.bind.annotation.*;
+
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
-
-import com.harpya.harpya_spring_boot.service.UsuarioService;
-
 @RestController
+// @RequestMapping("/api") // opcional para organizar as rotas
 @CrossOrigin
 public class UsuarioController {
 
-	@Autowired
-	UsuarioService servico;
-	
-	// Create
-	@PostMapping("/usuarios")
-	public Usuario inserirUsuario(@RequestBody Usuario u) {
-	    return servico.InserirUsuario(u);
-	}
-	
-	// Read
-	@GetMapping("/usuarios")
-	public List<Usuario> listarUsuario() {
-		return servico.listarUsuario();
-	}
-	
-	// Update
-	@PutMapping("/usuarios")
-	public void atualizarUsuario(@RequestBody Usuario u) {
-		servico.atualizarUsuario(u);
-		
-	}
-	
-	// Delete
-	@DeleteMapping("/usuarios/{id}")
-	public void deletarUsuario(@PathVariable int id) {
-		servico.deletarUsuario(id);
-		
-	}
-	
+    @Autowired
+    private UsuarioService servico;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+    
+  
+    // Endpoint de login
+    @PostMapping("/login")
+    public ResponseEntity<String> login(@RequestBody Usuario loginData) {
+        Usuario usuario = servico.buscarPorEmail(loginData.getEmailUsuario());
+        System.out.println(usuario);
+
+        if (usuario != null && passwordEncoder.matches(loginData.getSenha_hash(), usuario.getSenha_hash())) {
+            return ResponseEntity.ok("Login realizado com sucesso!");
+        } else {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Email ou senha inválidos.");
+        }
+    }
+
+    // Cadastro de novo usuário
+    @PostMapping("/usuarios")
+    public Usuario inserirUsuario(@RequestBody Usuario u) {
+        return servico.InserirUsuario(u);
+    }
+
+    // Listar usuários
+    @GetMapping("/usuarios")
+    public List<Usuario> listarUsuario() {
+        return servico.listarUsuario();
+    }
+
+    // Atualizar usuário
+    @PutMapping("/usuarios")
+    public void atualizarUsuario(@RequestBody Usuario u) {
+        servico.atualizarUsuario(u);
+    }
+
+    // Deletar usuário
+    @DeleteMapping("/usuarios/{id}")
+    public void deletarUsuario(@PathVariable int id) {
+        servico.deletarUsuario(id);
+    }
 }

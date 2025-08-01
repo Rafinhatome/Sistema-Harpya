@@ -2,6 +2,7 @@ document.addEventListener("DOMContentLoaded", function () {
   const form = document.getElementById("addUserForm");
   const userNameInput = document.getElementById("userName");
   const userEmailInput = document.getElementById("userEmail");
+  const userPasswordInput = document.getElementById("userPassword");
   const cardContainer = document.getElementById("cardContainer");
 
   form.addEventListener("submit", function (e) {
@@ -9,14 +10,15 @@ document.addEventListener("DOMContentLoaded", function () {
 
     const name = userNameInput.value.trim();
     const email = userEmailInput.value.trim();
+    const senha_hash = userPasswordInput.value.trim();
 
-    if (!name || !email) return;
+    if (!name || !email || !senha_hash) return;
 
     // ATENÇÃO: os nomes precisam bater com os nomes do Java (Usuario.java)
     const usuario = {
       nomeUsuario: name,
       emailUsuario: email,
-      senha_hash: "123456",  // Pode ajustar conforme desejar
+      senha_hash: senha_hash,  // Pode ajustar conforme desejar
       ativo: 1               // Ou true, dependendo de como você trata no back-end
     };
 

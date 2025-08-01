@@ -1,5 +1,7 @@
 package com.harpya.harpya_spring_boot.model;
 
+import org.springframework.web.bind.annotation.CrossOrigin;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import jakarta.persistence.Column;
@@ -9,6 +11,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
+@CrossOrigin
 @Entity
 @Table(name = "usuarios")
 public class Usuario {
