@@ -26,8 +26,13 @@ public class UsuarioController {
     // Endpoint de login
     @PostMapping("/login")
     public ResponseEntity<String> login(@RequestBody Usuario loginData) {
+        // Validação de campos obrigatórios
+        if (loginData.getEmailUsuario() == null || loginData.getEmailUsuario().isBlank() ||
+            loginData.getSenha_hash() == null || loginData.getSenha_hash().isBlank()) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Email e senha são obrigatórios.");
+        }
+
         Usuario usuario = servico.buscarPorEmail(loginData.getEmailUsuario());
-        System.out.println(usuario);
 
         if (usuario != null && passwordEncoder.matches(loginData.getSenha_hash(), usuario.getSenha_hash())) {
             return ResponseEntity.ok("Login realizado com sucesso!");

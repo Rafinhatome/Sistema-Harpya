@@ -2,17 +2,22 @@ document.addEventListener("DOMContentLoaded", function () {
   const form = document.querySelector("form");
 
   form.addEventListener("submit", function (e) {
-    e.preventDefault();
+    e.preventDefault(); // impede o submit padrão
 
     const email = document.getElementById("emailUsuario").value.trim();
     const senha = document.getElementById("senhaUsuario").value.trim();
+
+    // valida campos obrigatórios
+    if (!email || !senha) {
+      alert("Preencha todos os campos!");
+      return; // impede de continuar para o fetch
+    }
 
     const usuario = {
       emailUsuario: email,
       senha_hash: senha
     };
 
-    console.log("usuario", usuario);
     fetch("http://localhost:8080/login", {
       method: "POST",
       headers: {
@@ -20,15 +25,15 @@ document.addEventListener("DOMContentLoaded", function () {
       },
       body: JSON.stringify(usuario)
     })
-    .then(response => {
+    .then(async response => {
+      const text = await response.text();
       if (!response.ok) {
-        throw new Error("Email ou senha inválidos.");
+        throw new Error(text || "Email ou senha inválidos.");
       }
-      return response.text(); // ou .json() se preferir
+      return text;
     })
-
     .then(msg => {
-      alert("Login realizado com sucesso!");
+      alert(msg); 
       window.location.href = "../html/dashboard_principal.html";
     })
     .catch(err => {
