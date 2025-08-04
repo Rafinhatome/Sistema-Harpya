@@ -5,6 +5,57 @@ document.addEventListener("DOMContentLoaded", function () {
   const userPasswordInput = document.getElementById("userPassword");
   const cardContainer = document.getElementById("cardContainer");
 
+  // --- Função para criar e adicionar um card ---
+  // Esta função é chamada tanto para um novo cadastro quanto ao carregar a página.
+  function createAndAppendCard(userData) {
+    const col = document.createElement("div");
+    col.className = "col-sm-6 mb-3 mb-sm-0";
+    col.setAttribute("data-id", userData.id);
+
+    col.innerHTML = `
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">${userData.nomeUsuario}</h5>
+          <i class="bi bi-person" style="font-size: 2rem; color: #0d6efd;"></i>
+          <p class="card-text">${userData.emailUsuario}</p>
+          <div class="dropdown">
+            <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Configuração
+            </button>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="#">Atualizar login e senha</a></li>
+              <li><a class="dropdown-item text-danger btn-remove" href="#">Desativar</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    `;
+    cardContainer.appendChild(col);
+  }
+
+  // --- Função para buscar todos os usuários do backend e exibi-los ---
+  function fetchAndDisplayUsers() {
+    fetch("http://localhost:8080/usuarios")
+      .then(response => {
+        if (!response.ok) throw new Error("Erro ao buscar usuários");
+        return response.json();
+      })
+      .then(users => {
+        // Limpa os cards existentes antes de carregar os novos
+        cardContainer.innerHTML = '';
+        
+        // Itera sobre a lista de usuários e cria um card para cada um
+        users.forEach(user => {
+          createAndAppendCard(user);
+        });
+      })
+      .catch(error => {
+        console.error("Erro ao buscar usuários:", error);
+        alert("Não foi possível carregar os usuários.");
+      });
+  }
+
+  // --- Lógica do formulário de cadastro ---
   form.addEventListener("submit", function (e) {
     e.preventDefault();
 
@@ -14,12 +65,11 @@ document.addEventListener("DOMContentLoaded", function () {
 
     if (!name || !email || !senha_hash) return;
 
-    // ATENÇÃO: os nomes precisam bater com os nomes do Java (Usuario.java)
     const usuario = {
       nomeUsuario: name,
       emailUsuario: email,
-      senha_hash: senha_hash,  // Pode ajustar conforme desejar
-      ativo: 1               // Ou true, dependendo de como você trata no back-end
+      senha_hash: senha_hash,
+      ativo: 1
     };
 
     fetch("http://localhost:8080/usuarios", {
@@ -32,34 +82,12 @@ document.addEventListener("DOMContentLoaded", function () {
         return response.json();
       })
       .then(data => {
-        const col = document.createElement("div");
-        col.className = "col-sm-6 mb-3 mb-sm-0";
-        col.setAttribute("data-id", data.id);
+        // Usa a função reutilizável para criar e adicionar o card
+        createAndAppendCard(data);
 
-        col.innerHTML = `
-          <div class="card">
-            <div class="card-body">
-              <h5 class="card-title">${data.nomeUsuario}</h5>
-              <i class="bi bi-person" style="font-size: 2rem; color: #0d6efd;"></i>
-              <p class="card-text">${data.emailUsuario}</p>
-              <div class="dropdown">
-                <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                  Configuração
-                </button>
-                <ul class="dropdown-menu">
-                  <li><a class="dropdown-item" href="#">Atualizar login e senha</a></li>
-                  <li><a class="dropdown-item text-danger btn-remove" href="#">Desativar</a></li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        `;
-
-        cardContainer.appendChild(col);
-
+        // Fecha o modal e limpa o formulário
         const modal = bootstrap.Modal.getInstance(document.getElementById("modalAddUser"));
         if (modal) modal.hide();
-
         form.reset();
       })
       .catch(error => {
@@ -68,7 +96,7 @@ document.addEventListener("DOMContentLoaded", function () {
       });
   });
 
-  // Lógica de remoção (também faz DELETE no backend)
+  // --- Lógica de remoção ---
   cardContainer.addEventListener("click", function (e) {
     if (e.target.classList.contains("btn-remove")) {
       const card = e.target.closest(".col-sm-6");
@@ -89,4 +117,7 @@ document.addEventListener("DOMContentLoaded", function () {
       }
     }
   });
+  
+  // --- Ação principal: Carregar todos os usuários ao abrir a página ---
+  fetchAndDisplayUsers();
 });

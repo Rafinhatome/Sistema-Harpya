@@ -34,7 +34,7 @@ document.addEventListener("DOMContentLoaded", function () {
     })
     .then(msg => {
       alert(msg); 
-      window.location.href = "../html/dashboard_principal.html";
+      window.location.href = "../static/html/dashboard_principal.html";
     })
     .catch(err => {
       alert(err.message);
