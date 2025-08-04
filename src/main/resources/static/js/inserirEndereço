@@ -1,0 +1,105 @@
+document.addEventListener('DOMContentLoaded', function () {
+    // ... (restante das suas variáveis e funções) ...
+
+    const urlParams = new URLSearchParams(window.location.search);
+    const userId = urlParams.get('userId');
+
+    // Verifica se um userId foi encontrado na URL
+    if (userId) {
+        console.log(`Usuário ID: ${userId} está editando o endereço.`);
+        // Aqui você pode adicionar a lógica para buscar o endereço do usuário
+        // Usando o userId (ex: fetch(`http://localhost:8080/enderecos/${userId}`))
+    } else {
+        console.log("Nenhum ID de usuário encontrado na URL.");
+        // Você pode tratar este caso, por exemplo, mostrando uma mensagem de erro
+    }
+});
+
+
+
+document.addEventListener('DOMContentLoaded', function () {
+    const cepInput = document.getElementById('cep');
+    const ruaInput = document.getElementById('rua');
+    const bairroInput = document.getElementById('bairro');
+    const cidadeInput = document.getElementById('cidade');
+    const ufInput = document.getElementById('uf');
+    const numeroInput = document.getElementById('numero');
+    const errorMsg = document.getElementById('errorMsg');
+    const addressForm = document.getElementById('addressForm');
+    const clearBtn = document.getElementById('clearBtn');
+
+    function mostraErro(mensagem) {
+        errorMsg.textContent = mensagem;
+    }
+
+    function limpaErro() {
+        errorMsg.textContent = '';
+    }
+
+    function limpaCamposEndereco() {
+        ruaInput.value = '';
+        bairroInput.value = '';
+        cidadeInput.value = '';
+        ufInput.value = '';
+    }
+
+    cepInput.addEventListener('blur', function () {
+        const cep = this.value.replace(/\D/g, '');
+
+        if (cep.length !== 8) {
+            mostraErro("CEP inválido. Deve conter 8 dígitos.");
+            limpaCamposEndereco();
+            return;
+        }
+
+        fetch(`https://viacep.com.br/ws/${cep}/json/`)
+            .then(resposta => resposta.json())
+            .then(dados => {
+                if (dados.erro) {
+                    mostraErro("CEP não encontrado.");
+                    limpaCamposEndereco();
+                } else {
+                    ruaInput.value = dados.logradouro;
+                    bairroInput.value = dados.bairro;
+                    cidadeInput.value = dados.localidade;
+                    ufInput.value = dados.uf;
+                    limpaErro();
+                }
+            })
+            .catch(() => {
+                mostraErro("Erro ao buscar o CEP.");
+                limpaCamposEndereco();
+            });
+    });
+
+    clearBtn.addEventListener('click', function () {
+        addressForm.reset();
+        limpaCamposEndereco();
+        limpaErro();
+    });
+
+    addressForm.addEventListener('submit', function (e) {
+        e.preventDefault();
+
+        const dados = {
+            cep: cepInput.value,
+            rua: ruaInput.value,
+            numero: numeroInput.value,
+            bairro: bairroInput.value,
+            cidade: cidadeInput.value,
+            uf: ufInput.value
+        };
+
+        // Aqui você faria o envio para o seu backend Java
+        console.log("Dados do endereço a serem enviados:", dados);
+        alert(
+            `Dados do endereço a serem salvos:\n` +
+            `CEP: ${dados.cep}\n` +
+            `Rua: ${dados.rua}\n` +
+            `Número: ${dados.numero}\n` +
+            `Bairro: ${dados.bairro}\n` +
+            `Cidade: ${dados.cidade}\n` +
+            `Estado: ${dados.uf}`
+        );
+    });
+});

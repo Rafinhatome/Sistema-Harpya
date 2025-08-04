@@ -12,7 +12,7 @@
         <script src="../assets/js/color-modes.js"></script>
         <link href="../assets/dist/css/bootstrap.min.css" rel="stylesheet">
         <meta name="theme-color" content="#712cf9">
-        <link href="../css/usuario.css" rel="stylesheet">
+        <link href="../css/endereco.css" rel="stylesheet">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <style>
         .bd-placeholder-img {
@@ -318,42 +318,54 @@
                 </div> 
                 <div class="row" id="cardContainer"> <!-- <- ID necessário aqui -->
                 </div> 
-                                    <!-- Modal: Adicionar Usuário -->
-        <div class="modal fade" id="modalAddUser" tabindex="-1" aria-labelledby="modalAddUserLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content rounded-3 shadow">
-                    <div class="modal-header bg-primary text-white">
-                        <h5 class="modal-title" id="modalAddUserLabel">Adicionar Novo Usuário</h5>
-                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Fechar"></button>
-                    </div>
-                    <form id="addUserForm">
-                        <div class="modal-body">
-                            <div class="mb-3">
-                                <label for="userName" class="form-label">Nome</label>
-                                <input type="text" class="form-control" id="userName" placeholder="Nome do usuário" required>
-                            </div>
-                            <div class="mb-3">
-                                <label for="userEmail" class="form-label">E-mail</label>
-                                <input type="email" class="form-control" id="userEmail" placeholder="Email do usuário" required>
-                            </div>
-                            <div class="mb-3">
-                                <label for="userPassword" class="form-label">Senha</label>
-                                <input type="password" class="form-control" id="userPassword" placeholder="Senha do usuário" required>
-                            </div>
-                            <div class="mb-3">
-                                <label for="userConfirmPassword" class="form-label">Confirmar Senha</label>
-                                <input type="password" class="form-control" id="userConfirmPassword" placeholder="Confirme a senha" required>
-                            </div>
-                            <div id="passwordError" class="alert alert-danger" style="display: none;"></div>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                            <button type="submit" class="btn btn-primary">Salvar</button>
-                        </div>
-                    </form>
+                                    <Adicionar Endereço -->
+        <div class="container mt-5">
+        <div class="card p-4 shadow-sm">
+            <h2 class="card-title text-center mb-4">Cadastro de Endereço</h2>
+            <form id="addressForm" autocomplete="off">
+                <div class="mb-3">
+                    <label for="cep" class="form-label">CEP:</label>
+                    <input type="text" class="form-control" id="cep" name="cep" maxlength="8" required placeholder="Digite o CEP (8 dígitos)">
+                    <span class="error-message text-danger" id="errorMsg"></span>
                 </div>
-            </div>
+
+                <div class="mb-3">
+                    <label for="rua" class="form-label">Rua:</label>
+                    <input type="text" class="form-control" id="rua" name="rua" readonly>
+                </div>
+
+                <div class="mb-3">
+                    <label for="numero" class="form-label">Número:</label>
+                    <input type="text" class="form-control" id="numero" name="numero" placeholder="Digite o número">
+                </div>
+
+                <div class="mb-3">
+                    <label for="complemento" class="form-label">Complemento:</label>
+                    <input type="text" class="form-control" id="complemento" name="complemento" placeholder="Complemento (opcional)">
+                </div>
+
+                <div class="mb-3">
+                    <label for="bairro" class="form-label">Bairro:</label>
+                    <input type="text" class="form-control" id="bairro" name="bairro" readonly>
+                </div>
+
+                <div class="mb-3">
+                    <label for="cidade" class="form-label">Cidade:</label>
+                    <input type="text" class="form-control" id="cidade" name="cidade" readonly>
+                </div>
+
+                <div class="mb-3">
+                    <label for="uf" class="form-label">Estado:</label>
+                    <input type="text" class="form-control" id="uf" name="uf" readonly>
+                </div>
+
+                <div class="d-grid gap-2">
+                    <button type="submit" id="saveBtn" class="btn btn-primary">Salvar Endereço</button>
+                    <button type="button" id="clearBtn" class="btn btn-secondary">Limpar</button>
+                </div>
+            </form>
         </div>
+    </div>
 
                 </div>
             </main>
@@ -363,7 +375,7 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.3.2/dist/chart.umd.js"
         integrity="sha384-eI7PSr3L1XLISH8JdDII5YN/njoSsxfbrkCTnJrzXt+ENP5MOVBxD+l6sEG4zoLp" crossorigin="anonymous"
         class="astro-vvvwv3sm"></script>
-    <script src="../js/inserirUsuario.js" class="astro-vvvwv3sm"></script>
+    <script src="../js/inserirEndereço" class="astro-vvvwv3sm"></script>
 </body>
 
 </html>

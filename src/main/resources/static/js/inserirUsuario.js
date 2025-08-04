@@ -25,6 +25,7 @@ document.addEventListener("DOMContentLoaded", function () {
               </button>
               <ul class="dropdown-menu">
                 <li><a class="dropdown-item" href="#">Atualizar login e senha</a></li>
+                <li><a class="dropdown-item" href="endereco.html?userId=${userData.id}">Endereço</a></li>
                 <li><a class="dropdown-item text-danger btn-remove" href="#">Desativar</a></li>
               </ul>
             </div>
