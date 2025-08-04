@@ -319,40 +319,41 @@
                 <div class="row" id="cardContainer"> <!-- <- ID necessário aqui -->
                 </div> 
                                     <!-- Modal: Adicionar Usuário -->
-                    <div class="modal fade" id="modalAddUser" tabindex="-1" aria-labelledby="modalAddUserLabel" aria-hidden="true">
-                    <div class="modal-dialog">
-                        <div class="modal-content rounded-3 shadow">
-                        <div class="modal-header bg-primary text-white">
-                            <h5 class="modal-title" id="modalAddUserLabel">Adicionar Novo Usuário</h5>
-                            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Fechar"></button>
-                        </div>
-                        <form id="addUserForm">
-                            <div class="modal-body">
-                            <div class="mb-3">
-                                <label for="userName" class="form-label">Nome</label>
-                                <input type="text" class="form-control" id="userName" placeholder="Nome do usuário" required>
-                            </div>
-                            <div class="mb-3">
-                                <label for="userEmail" class="form-label">E-mail</label>
-                                <input type="email" class="form-control" id="userEmail" placeholder="Email do usuário" required>
-                            </div>
-                            <div class="mb-3">
-                                <label for="userPassword" class="form-label">Senha</label>
-                                <input type="password" class="form-control" id="userPassword" placeholder="Senha do usuário" required>
-                            </div>
-                            <div class="mb-3">
-                                <label for="userPassword" class="form-label">Confirmar Senha</label>
-                                <input type="password" class="form-control" id="userPassword" placeholder="Senha do usuário" required>
-                            </div>
-                            </div>
-                            <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                            <button type="submit" class="btn btn-primary">Salvar</button>
-                            </div>
-                        </form>
-                        </div>
+<div class="modal fade" id="modalAddUser" tabindex="-1" aria-labelledby="modalAddUserLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content rounded-3 shadow">
+            <div class="modal-header bg-primary text-white">
+                <h5 class="modal-title" id="modalAddUserLabel">Adicionar Novo Usuário</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Fechar"></button>
+            </div>
+            <form id="addUserForm">
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="userName" class="form-label">Nome</label>
+                        <input type="text" class="form-control" id="userName" placeholder="Nome do usuário" required>
                     </div>
+                    <div class="mb-3">
+                        <label for="userEmail" class="form-label">E-mail</label>
+                        <input type="email" class="form-control" id="userEmail" placeholder="Email do usuário" required>
                     </div>
+                    <div class="mb-3">
+                        <label for="userPassword" class="form-label">Senha</label>
+                        <input type="password" class="form-control" id="userPassword" placeholder="Senha do usuário" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="userConfirmPassword" class="form-label">Confirmar Senha</label>
+                        <input type="password" class="form-control" id="userConfirmPassword" placeholder="Confirme a senha" required>
+                    </div>
+                    <div id="passwordError" class="alert alert-danger" style="display: none;"></div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn btn-primary">Salvar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 
                 </div>
             </main>
