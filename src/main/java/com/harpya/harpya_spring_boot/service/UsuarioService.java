@@ -32,6 +32,10 @@ public class UsuarioService {
     public List<Usuario> listarUsuario() {
         return repo.findAll();
     }
+    
+    public Usuario buscarUsuarioPorId(int id) {
+        return repo.findById(id).orElse(null); // ou lançar uma exceção se preferir
+    }
 
     // Update
     public void atualizarUsuario(Usuario u) {

@@ -40,6 +40,16 @@ public class UsuarioController {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Email ou senha inválidos.");
         }
     }
+    
+    @GetMapping("/usuarios/{id}")
+    public ResponseEntity<Usuario> buscarPorId(@PathVariable int id) {
+        Usuario usuario = servico.buscarUsuarioPorId(id);
+        if (usuario != null) {
+            return ResponseEntity.ok(usuario);
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+    }
 
     // Cadastro de novo usuário
     @PostMapping("/usuarios")

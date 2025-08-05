@@ -1,6 +1,8 @@
 
 package com.harpya.harpya_spring_boot.model;
 
+import org.springframework.web.bind.annotation.CrossOrigin;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -11,6 +13,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
+@CrossOrigin
 @Entity
 @Table(name = "enderecos")
 public class Endereco {
@@ -43,10 +46,12 @@ public class Endereco {
     @Column(name = "estado")
     private String estado;
     
+    @Column(name = "cep")
+    private String cep;
 
     public Endereco() {}
     
-    public Endereco(Usuario usuario, String rua, int numero, String complemento, String bairro, String cidade, String estado) {
+    public Endereco(Usuario usuario, String rua, int numero, String complemento, String bairro, String cidade, String estado, String cep) {
         this.usuario = usuario;
         this.rua = rua;
         this.numero = numero;
@@ -54,6 +59,7 @@ public class Endereco {
         this.bairro = bairro;
         this.cidade = cidade;
         this.estado = estado;
+        this.cep = cep;
     }
     
     // Getters e Setters
@@ -120,4 +126,12 @@ public class Endereco {
     public void setEstado(String estado) {
         this.estado = estado;
     }
+
+	public String getCep() {
+		return cep;
+	}
+	
+	public void setCep(String cep) {
+		this.cep = cep;
+	}
 }
