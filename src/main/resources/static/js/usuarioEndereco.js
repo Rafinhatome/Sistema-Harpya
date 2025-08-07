@@ -85,7 +85,7 @@ document.addEventListener("DOMContentLoaded", function () {
             // Preenche os campos de endereço se existirem
             if (usuario.enderecoUsuario) {
                 cepInput.value = usuario.enderecoUsuario.cep;
-                ruaInput.value = usuario.enderecoUsuario.logradouro;
+                ruaInput.value = usuario.enderecoUsuario.rua;
                 numeroInput.value = usuario.enderecoUsuario.numero;
                 complementoInput.value = usuario.enderecoUsuario.complemento;
                 bairroInput.value = usuario.enderecoUsuario.bairro;
@@ -108,23 +108,18 @@ document.addEventListener("DOMContentLoaded", function () {
         }
         
         const dadosParaSalvar = {
-            nomeUsuario: nomeInput.value,
-            emailUsuario: emailInput.value,
-            // A estrutura do objeto de endereço deve ser a mesma do seu backend
-            enderecoUsuario: {
-                cep: cepInput.value,
-                logradouro: ruaInput.value,
-                numero: numeroInput.value,
-                complemento: complementoInput.value,
-                bairro: bairroInput.value,
-                cidade: cidadeInput.value,
-                estado: estadoInput.value
-            }
+            cep: cepInput.value,
+            rua: ruaInput.value,
+            numero: numeroInput.value,
+            complemento: complementoInput.value,
+            bairro: bairroInput.value,
+            cidade: cidadeInput.value,
+            estado: estadoInput.value
         };
 
         try {
             const response = await fetch(`http://localhost:8080/enderecos/usuario/${userId}`, {
-                method: 'PUT', // ou 'PATCH', dependendo da sua API
+                method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json'
                 },

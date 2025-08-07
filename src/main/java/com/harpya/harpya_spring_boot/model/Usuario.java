@@ -9,7 +9,10 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.FetchType;
 
 @CrossOrigin
 @Entity
@@ -35,14 +38,19 @@ public class Usuario {
     @Column(name = "ativo")
     private int ativo;
 
+    @OneToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "id_endereco", referencedColumnName = "id")
+    private Endereco enderecoUsuario;
+
     public Usuario() {}
 
-    public Usuario(int id, String nomeUsuario, String emailUsuario, String senha_hash, int ativo) {
+    public Usuario(int id, String nomeUsuario, String emailUsuario, String senha_hash, int ativo, Endereco enderecoUsuario) {
         this.id = id;
         this.nomeUsuario = nomeUsuario;
         this.emailUsuario = emailUsuario;
         this.senha_hash = senha_hash;
         this.ativo = ativo;
+        this.enderecoUsuario = enderecoUsuario;
     }
 
     // Getters e Setters
@@ -85,5 +93,13 @@ public class Usuario {
 
     public void setAtivo(int ativo) {
         this.ativo = ativo;
+    }
+
+    public Endereco getEnderecoUsuario() {
+        return enderecoUsuario;
+    }
+
+    public void setEnderecoUsuario(Endereco enderecoUsuario) {
+        this.enderecoUsuario = enderecoUsuario;
     }
 }

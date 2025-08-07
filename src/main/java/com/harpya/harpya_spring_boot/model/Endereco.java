@@ -1,16 +1,14 @@
-
 package com.harpya.harpya_spring_boot.model;
 
 import org.springframework.web.bind.annotation.CrossOrigin;
 
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToOne;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.Table;
 
 @CrossOrigin
@@ -23,16 +21,15 @@ public class Endereco {
     @Column(name="id")
     private Integer id;
 
-
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne
     @JoinColumn(name = "usuario_id", referencedColumnName = "id")
     private Usuario usuario;
     
-    @Column(name = "rua")
-    private String rua;
+    @Column(name = "logradouro")
+    private String logradouro;
     
     @Column(name = "numero")
-    private int numero;
+    private String numero;
     
     @Column(name = "complemento")
     private String complemento;
@@ -51,9 +48,9 @@ public class Endereco {
 
     public Endereco() {}
     
-    public Endereco(Usuario usuario, String rua, int numero, String complemento, String bairro, String cidade, String estado, String cep) {
+    public Endereco(Usuario usuario, String logradouro, String numero, String complemento, String bairro, String cidade, String estado, String cep) {
         this.usuario = usuario;
-        this.rua = rua;
+        this.logradouro = logradouro;
         this.numero = numero;
         this.complemento = complemento;
         this.bairro = bairro;
@@ -79,19 +76,19 @@ public class Endereco {
         this.usuario = usuario;
     }
     
-    public String getRua() {
-        return rua;
+    public String getLogradouro() {
+        return logradouro;
     }
     
-    public void setRua(String rua) {
-        this.rua = rua;
+    public void setLogradouro(String logradouro) {
+        this.logradouro = logradouro;
     }
     
-    public int getNumero() {
+    public String getNumero() {
         return numero;
     }
     
-    public void setNumero(int numero) {
+    public void setNumero(String numero) {
         this.numero = numero;
     }
     
