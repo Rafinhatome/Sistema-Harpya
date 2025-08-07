@@ -123,7 +123,7 @@ document.addEventListener("DOMContentLoaded", function () {
         };
 
         try {
-            const response = await fetch(`http://localhost:8080/usuarios/${userId}`, {
+            const response = await fetch(`http://localhost:8080/enderecos/usuario/${userId}`, {
                 method: 'PUT', // ou 'PATCH', dependendo da sua API
                 headers: {
                     'Content-Type': 'application/json'

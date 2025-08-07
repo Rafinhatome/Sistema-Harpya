@@ -44,18 +44,27 @@ public class EnderecoService {
     }
 
     // Update: Atualizar endereço de um usuário
-    public Endereco atualizarEnderecoDoUsuario(int idUsuario, Endereco novoEndereco) {
-        Endereco enderecoExistente = enderecoRepo.findByUsuarioId(idUsuario)
-            .orElseThrow(() -> new RuntimeException("Endereço não encontrado para o usuário"));
+    public Endereco atualizarEnderecoDoUsuario(int idUsuario, Endereco enderecoAtualizado) {
+        Usuario usuario = usuarioRepo.findById(idUsuario)
+            .orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
 
-        enderecoExistente.setRua(novoEndereco.getRua());
-        enderecoExistente.setNumero(novoEndereco.getNumero());
-        enderecoExistente.setComplemento(novoEndereco.getComplemento());
-        enderecoExistente.setBairro(novoEndereco.getBairro());
-        enderecoExistente.setCidade(novoEndereco.getCidade());
-        enderecoExistente.setEstado(novoEndereco.getEstado());
+        Optional<Endereco> enderecoExistente = enderecoRepo.findByUsuarioId(idUsuario);
 
-        return enderecoRepo.save(enderecoExistente);
+        Endereco endereco;
+        if (enderecoExistente.isPresent()) {
+            endereco = enderecoExistente.get();
+            endereco.setCep(enderecoAtualizado.getCep());
+            endereco.setRua(enderecoAtualizado.getRua());
+            endereco.setBairro(enderecoAtualizado.getBairro());
+            endereco.setCidade(enderecoAtualizado.getCidade());
+            endereco.setEstado(enderecoAtualizado.getEstado());
+            endereco.setComplemento(enderecoAtualizado.getComplemento());
+        } else {
+            endereco = enderecoAtualizado;
+            endereco.setUsuario(usuario);
+        }
+
+        return enderecoRepo.save(endereco);
     }
 
     // Delete: Deletar endereço por ID
