@@ -4,7 +4,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
     if (!userId) {
         alert("ID do usuário não encontrado.");
-        // Opcional: redirecionar para a página de listagem
         window.location.href = 'usuarios.html';
         return;
     }
@@ -13,23 +12,26 @@ document.addEventListener("DOMContentLoaded", function () {
     const nomeInput = document.getElementById("nome");
     const emailInput = document.getElementById("email");
     const cepInput = document.getElementById("cep");
-    const ruaInput = document.getElementById("rua");
+    const logradouroInput = document.getElementById("logradouro");
     const numeroInput = document.getElementById("numero");
     const complementoInput = document.getElementById("complemento");
     const bairroInput = document.getElementById("bairro");
     const cidadeInput = document.getElementById("cidade");
     const estadoInput = document.getElementById("estado");
     const salvarBtn = document.querySelector(".btn-success");
+
+    const enderecoIdInput = document.createElement('input');
+    enderecoIdInput.type = 'hidden';
+    enderecoIdInput.id = 'enderecoId';
+    document.body.appendChild(enderecoIdInput);
     
     // --- Funções de utilidade ---
     function mostraMensagem(mensagem, tipo = 'info') {
-        // Você pode implementar uma lógica de mensagens na tela aqui
-        // Por exemplo, usando um alert ou um modal
         alert(mensagem);
     }
     
     function limpaCamposEndereco() {
-        ruaInput.value = '';
+        logradouroInput.value = '';
         numeroInput.value = '';
         complementoInput.value = '';
         bairroInput.value = '';
@@ -55,11 +57,10 @@ document.addEventListener("DOMContentLoaded", function () {
                 mostraMensagem("CEP não encontrado.", 'erro');
                 limpaCamposEndereco();
             } else {
-                ruaInput.value = dados.logradouro;
+                logradouroInput.value = dados.logradouro;
                 bairroInput.value = dados.bairro;
                 cidadeInput.value = dados.localidade;
-                estadoInput.value = dados.uf;
-                // Deixa o número e complemento vazios para que o usuário preencha
+                estadoInput.value = dados.estado;
                 numeroInput.value = ''; 
                 complementoInput.value = '';
             }
@@ -72,27 +73,30 @@ document.addEventListener("DOMContentLoaded", function () {
     // --- Lógica para buscar e preencher dados do usuário ---
     async function buscarUsuario(id) {
         try {
-            const response = await fetch(`http://localhost:8080/usuarios/${id}`);
-            if (!response.ok) {
+            const responseUsuario = await fetch(`http://localhost:8080/usuarios/${id}`);
+            if (!responseUsuario.ok) {
                 throw new Error("Erro ao buscar dados do usuário");
             }
-            const usuario = await response.json();
+            const usuario = await responseUsuario.json();
             
-            // Preenche os campos do usuário
             nomeInput.value = usuario.nomeUsuario;
             emailInput.value = usuario.emailUsuario;
 
-            // Preenche os campos de endereço se existirem
-            if (usuario.enderecoUsuario) {
-                cepInput.value = usuario.enderecoUsuario.cep;
-                ruaInput.value = usuario.enderecoUsuario.rua;
-                numeroInput.value = usuario.enderecoUsuario.numero;
-                complementoInput.value = usuario.enderecoUsuario.complemento;
-                bairroInput.value = usuario.enderecoUsuario.bairro;
-                cidadeInput.value = usuario.enderecoUsuario.cidade;
-                estadoInput.value = usuario.enderecoUsuario.estado;
+            const responseEndereco = await fetch(`http://localhost:8080/enderecos/usuario/${id}`);
+            if (responseEndereco.ok) {
+                const endereco = await responseEndereco.json();
+                if (endereco) {
+                    enderecoIdInput.value = endereco.id;
+                    cepInput.value = endereco.cep;
+                    logradouroInput.value = endereco.logradouro;
+                    numeroInput.value = endereco.numero;
+                    complementoInput.value = endereco.complemento;
+                    bairroInput.value = endereco.bairro;
+                    estadoInput.value = endereco.estado; // Mantendo o seu valor original
+                    cidadeInput.value = endereco.cidade;
+                }
             } else {
-                console.warn("Usuário sem endereço cadastrado.");
+                console.warn("Usuário sem endereço cadastrado ou erro ao buscar endereço.");
             }
         } catch (error) {
             console.error("Erro:", error);
@@ -102,14 +106,18 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // --- Lógica para salvar/atualizar dados do usuário ---
     async function salvarDados(event) {
-        // Evita que o formulário seja enviado da forma padrão do navegador
-        if (event) {
-            event.preventDefault(); 
-        }
+        event.preventDefault(); 
         
+        const enderecoId = enderecoIdInput.value;
+        const method = enderecoId ? 'PUT' : 'POST';
+        
+        const url = enderecoId 
+            ? `http://localhost:8080/enderecos/usuario/${userId}` 
+            : `http://localhost:8080/enderecos/${userId}`;
+
         const dadosParaSalvar = {
             cep: cepInput.value,
-            rua: ruaInput.value,
+            logradouro: logradouroInput.value,
             numero: numeroInput.value,
             complemento: complementoInput.value,
             bairro: bairroInput.value,
@@ -118,8 +126,8 @@ document.addEventListener("DOMContentLoaded", function () {
         };
 
         try {
-            const response = await fetch(`http://localhost:8080/enderecos/usuario/${userId}`, {
-                method: 'PUT',
+            const response = await fetch(url, {
+                method: method,
                 headers: {
                     'Content-Type': 'application/json'
                 },
@@ -127,14 +135,18 @@ document.addEventListener("DOMContentLoaded", function () {
             });
 
             if (!response.ok) {
-                const errorData = await response.json();
-                throw new Error(errorData.message || "Erro ao salvar dados.");
+                // A requisição falhou. Vamos tentar pegar o erro do servidor
+                const errorData = await response.json().catch(() => null);
+                if (errorData) {
+                    throw new Error(errorData.message || "Erro ao salvar dados.");
+                } else {
+                    // Erro 405 não tem corpo. Apenas joga o erro da requisição
+                    throw new Error(`Erro na requisição: ${response.status} ${response.statusText}`);
+                }
             }
 
             mostraMensagem("Dados atualizados com sucesso!", 'sucesso');
-            // Redireciona para a página de listagem após o sucesso
             window.location.href = 'usuarios.html';
-            
         } catch (error) {
             console.error("Erro ao salvar dados:", error);
             mostraMensagem(`Erro ao salvar dados: ${error.message}`, 'erro');
@@ -142,17 +154,14 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     // --- Adicionando Event Listeners ---
-    // Chama a função de busca do usuário quando a página é carregada
     buscarUsuario(userId);
 
-    // Adiciona o listener para a busca automática de CEP
     if (cepInput) {
         cepInput.addEventListener("blur", function() {
             getAddressByCep(this.value);
         });
     }
 
-    // Adiciona o listener para o botão de salvar
     if (salvarBtn) {
         salvarBtn.addEventListener('click', salvarDados);
     }

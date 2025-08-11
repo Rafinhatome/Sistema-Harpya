@@ -54,6 +54,7 @@ public class EnderecoService {
         if (enderecoExistente.isPresent()) {
             endereco = enderecoExistente.get();
             endereco.setCep(enderecoAtualizado.getCep());
+            endereco.setNumero(enderecoAtualizado.getNumero());
             endereco.setLogradouro(enderecoAtualizado.getLogradouro());
             endereco.setBairro(enderecoAtualizado.getBairro());
             endereco.setCidade(enderecoAtualizado.getCidade());
