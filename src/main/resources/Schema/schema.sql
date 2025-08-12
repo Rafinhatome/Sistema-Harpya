@@ -1,3 +1,12 @@
+CREATE TABLE login(
+id BIGINT PRIMARY KEY,
+nome VARCHAR (255),
+localizacao VARCHAR(255),
+ip VARCHAR(255),
+email VARCHAR(255),
+data_hora DATETIME(6)
+);
+
 CREATE TABLE usuarios (
   id INT AUTO_INCREMENT PRIMARY KEY,
   nome VARCHAR(255),
