@@ -25,12 +25,8 @@ public class SecurityConfig {
 	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 		http.cors(cors -> cors.configure(http)) // Habilita CORS
 				.csrf(csrf -> csrf.disable())
-				.authorizeHttpRequests(
-						auth -> auth.requestMatchers("/css/**", "/assets/**", "/js/**").permitAll().anyRequest().authenticated()) // Exige
-																													// autenticação
-																													// para
-																													// outras
-																													// páginas
+				.authorizeHttpRequests(auth -> auth
+						.requestMatchers("/css/**", "/assets/**", "/js/**").permitAll().anyRequest().authenticated())
 				.formLogin(form -> form.loginPage("/html/login.html") // Define a página de login personalizada
 						.loginProcessingUrl("/perform_login").usernameParameter("email") // Campo de email no formulário
 						.passwordParameter("password") // Campo de senha no formulário
@@ -51,18 +47,6 @@ public class SecurityConfig {
 						.allowCredentials(true);
 			}
 		};
-	}
 
-	@Bean
-	public PasswordEncoder passwordEncoder() {
-		return new BCryptPasswordEncoder();
-	}
-
-	@Bean
-	public DaoAuthenticationProvider authenticationProvider() {
-		DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
-		authProvider.setUserDetailsService(user);
-		authProvider.setPasswordEncoder(passwordEncoder());
-		return authProvider;
-	}
+}
 }
