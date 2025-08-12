@@ -53,5 +53,7 @@ public class UsuarioService {
     public Usuario buscarPorEmail(String email) {
         return repo.findByEmailUsuario(email);
     }
-    
+    public boolean emailDisponivel(String email) {
+        return repo.findByEmailUsuario(email) == null;
+    }
 }
