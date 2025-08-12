@@ -1,0 +1,51 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+@font-face {
+    font-family: 'SpaceRanger';
+    src: url('../font/space-ranger/spacerangercond.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Beiruti';
+    src: url('../font/beiruti/Beiruti-Regular.ttf') format('truetype');
+}
+
+header {
+    .menu {
+        font-family: 'Beiruti';
+        list-style: none;
+        display: flex;
+        justify-content: center;
+        gap: 20px;
+        color: #ffffff;
+    }
+
+    .logo {
+        font-family: 'SpaceRanger';
+        color: #ffffff;
+        text-align: left;
+        font-size: 2rem;
+        margin-left: 10px;
+        margin-top: 10px;
+    
+    }
+    .principal {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background-color: #000000;
+        padding: 10px 20px;
+    }
+    background-color: black;
+}
+
+a, a:visited, a:hover, a:active {
+    text-decoration: none;
+    color: #ffffff;
+}
