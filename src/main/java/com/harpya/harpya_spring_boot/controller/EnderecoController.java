@@ -1,10 +1,11 @@
-package com.harpya.harpya_spring_boot.model;
+package com.harpya.harpya_spring_boot.controller;
 
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import com.harpya.harpya_spring_boot.model.Endereco;
 import com.harpya.harpya_spring_boot.service.EnderecoService;
 
 @SuppressWarnings("unused")

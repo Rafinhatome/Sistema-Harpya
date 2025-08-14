@@ -1,44 +1,40 @@
 package com.harpya.harpya_spring_boot.model;
+
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "login_registro")
-public class LoginRegistro {
+@Table(name = "login")
+public class Login {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Long idLogin; // id auto-increment
 
+    private Long idUsuario; // referência ao usuário
     private String nome;
-
     private String email;
-
-    @Column(name = "data_hora")
-    private LocalDateTime dataHora;
-
     private String ip;
-
     private String localizacao;
 
-    // Construtores, getters e setters
+    private LocalDateTime dataHora;
 
-    public LoginRegistro() {}
+    // Getters e Setters
 
-    public LoginRegistro(String nome, String email, LocalDateTime dataHora, String ip, String localizacao) {
-        this.nome = nome;
-        this.email = email;
-        this.dataHora = dataHora;
-        this.ip = ip;
-        this.localizacao = localizacao;
+    public Long getIdLogin() {
+        return idLogin;
     }
 
-    public Integer getId() {
-        return id;
+    public void setIdLogin(Long idLogin) {
+        this.idLogin = idLogin;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public Long getIdUsuario() {
+        return idUsuario;
+    }
+
+    public void setIdUsuario(int idUsuario2) {
+        this.idUsuario = (long) idUsuario2;
     }
 
     public String getNome() {
@@ -57,14 +53,6 @@ public class LoginRegistro {
         this.email = email;
     }
 
-    public LocalDateTime getDataHora() {
-        return dataHora;
-    }
-
-    public void setDataHora(LocalDateTime dataHora) {
-        this.dataHora = dataHora;
-    }
-
     public String getIp() {
         return ip;
     }
@@ -79,5 +67,13 @@ public class LoginRegistro {
 
     public void setLocalizacao(String localizacao) {
         this.localizacao = localizacao;
+    }
+
+    public LocalDateTime getDataHora() {
+        return dataHora;
+    }
+
+    public void setDataHora(LocalDateTime dataHora) {
+        this.dataHora = dataHora;
     }
 }

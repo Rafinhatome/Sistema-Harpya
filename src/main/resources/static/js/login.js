@@ -18,7 +18,7 @@ document.addEventListener("DOMContentLoaded", function () {
       senha_hash: senha
     };
 
-    fetch("http://localhost:8080/login", {
+    fetch("http://localhost:8080/usuarios/html/login", {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
