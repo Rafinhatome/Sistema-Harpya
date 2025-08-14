@@ -1,10 +1,11 @@
-CREATE TABLE login(
-id BIGINT PRIMARY KEY,
-nome VARCHAR (255),
-localizacao VARCHAR(255),
-ip VARCHAR(255),
-email VARCHAR(255),
-data_hora DATETIME(6)
+CREATE TABLE login (
+  id_login BIGINT AUTO_INCREMENT PRIMARY KEY,
+  id_usuario BIGINT,
+  nome VARCHAR(255),
+  localizacao VARCHAR(255),
+  ip VARCHAR(255),
+  email VARCHAR(255),
+  data_hora DATETIME(6)
 );
 
 CREATE TABLE usuarios (
