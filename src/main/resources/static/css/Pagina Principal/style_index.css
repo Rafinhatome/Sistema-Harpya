@@ -1,162 +1,227 @@
+/* Reset básico */
 body {
-    margin: 0;
-    font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
-    color: #fff;
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background-color: #f4f4f4;
+  color: #fff;
+}
+
+/* Fonts */
+@font-face {
+  font-family: 'SpaceRanger';
+  src: url('../font/space-ranger/spacerangercond.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'Beiruti';
+  src: url('../font/beiruti/Beiruti-Regular.ttf') format('truetype');
 }
 
 /* Header */
-@font-face {
-    font-family: 'SpaceRanger';
-    src: url('../font/space-ranger/spacerangercond.ttf') format('truetype');
-    font-weight: normal;
-    font-style: normal;
-}
- 
-@font-face {
-    font-family: 'Beiruti';
-    src: url('../font/beiruti/Beiruti-Regular.ttf') format('truetype');
-}
- 
 header {
-     
-    .menu {
-        font-family: 'Beiruti';
-        list-style: none;
-        display: flex;
-        gap: 40px;
-        color: #ffffff;
-        text-align: right;
-        margin-left: 30px;
-    }
- 
-    .logo {
-        font-family: 'SpaceRanger';
-        color: #ffffff;
-        text-align: left;
-        font-size: 2rem;
-        margin-left: 20px;
-        margin-top: 20px;
-   
-    }
-    .principal {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        background-color: #000000;
-        padding: 20px 20px;
-        margin-right: 20PX;
-    }
-    background-color: black;
-    
+  background-color: #000;
 }
- 
-a, a:visited, a:hover, a:active, a:focus {
-    text-decoration: none;
-    color: #ffffff;
+.principal {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
 }
+.logo {
+  font-family: 'SpaceRanger';
+  color: #fff;
+  font-size: 2rem;
+}
+.menu {
+  list-style: none;
+  display: flex;
+  gap: 20px;
+  font-family: 'Beiruti';
+}
+.menu li a {
+  color: #fff;
+  text-decoration: none;
+}
+
 /* Hero */
 .hero {
-     text-align: center;
-    padding: 50px 20px;
-    background: #000b23 url('../../assets/imagens/—Pngtree—transparent\ wireframe\ wave\ 3d\ background_5325100.png') no-repeat;
-    background-size: cover;
-    background-position: center;
-    position: relative; 
-    
+  text-align: center;
+  padding: 50px 20px;
+  background: #000b23;
 }
 .hero h1 {
-    font-size: 28px;
-    font-weight: bold;
+  font-size: 28px;
+  font-weight: bold;
 }
 .hero p {
-    font-size: 16px;
-    margin-bottom: 20px;
+  font-size: 16px;
+  margin-bottom: 20px;
 }
 .hero-img {
-    max-width: 300px;
+  max-width: 600px;
+}
+.hero-bg {
+  width: 100%;
+  height: auto;
+  display: block;
+  margin: 0 auto;
 }
 
 /* Middle-art */
 .middle-art {
-    background: linear-gradient(to bottom, #000b23, #0f3757);
-    padding-top: 5%;
-    padding-bottom: 5%;
+  background: linear-gradient(to bottom, #000b23, #0f3757);
+  padding: 5% 0;
 }
 
-/* Reconhecimento Facial */
+/* Facial */
 .facial {
-    display: flex;
-    padding: 50px 20px;
-    background-color: #0f3757;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 40px;
+  padding: 80px 20px;
+  background-color: #0f3757;
+  flex-wrap: wrap; /* responsivo */
 }
 .facial-text {
-    max-width: 400px;
+  max-width: 500px;
 }
 .facial-text h2 {
-    font-size: 22px;
+  margin-bottom: 15px;
+  font-size: 2rem; /* Título destacado */
+  text-transform: uppercase; /* Para ficar igual à imagem */
+}
+.facial-text p {
+  font-size: 1.1rem;
+  margin-bottom: 25px;
+  line-height: 1.5;
+}
+.facial-text .buttons {
+  display: flex;
+  gap: 15px;
+  margin-top: 20px;
 }
 .facial-text button {
-    margin-top: 10px;
-    padding: 10px 20px;
-    border: none;
-    cursor: pointer;
+  margin: 5px;
+  padding: 10px 20px;
+  border: none;
+  cursor: pointer;
 }
-#btn-teste {
-    background: #0055aa;
-    color: white;
+.btn-primario {
+  background: #0055aa;
+  color: #fff;
+  padding: 12px 25px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background 0.3s;
 }
 .btn-secundario {
-    background: #ccc;
-    color: #000;
+  background: #ccc;
+  color: #000;
+}.btn-primario:hover {
+  background: #003d7a;
+}
+
+.btn-secundario {
+  background: transparent;
+  color: #fff;
+  padding: 12px 25px;
+  border: 2px solid #fff;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: all 0.3s;
+}
+
+.btn-secundario:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.facial-img img {
+  max-width: 350px;
+  width: 100%;
+  border-radius: 8px; /* Opcional: se quiser bordas arredondadas na imagem */
 }
 
 /* Benefícios */
 .beneficios {
-    text-align: center;
-    padding: 50px 20px;
-    background: #7CA8C1;
+  text-align: center;
+  padding: 50px 20px 0px;
+  background: #7CA8C1;
+}
+.beneficios-content {
+  display: flex;
+  gap: 40px;
+  max-width: 1100px;
+  margin: 30px auto 0;
+  align-items: flex-start;
+  flex-wrap: wrap;
+}
+.beneficios-img {
+  max-width: 450px;
+  width: 100%;
+  height: auto;
 }
 .cards {
-    display: flex;
-    justify-content: center;
-    gap: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  max-width: 420px;
+  width: 100%;
 }
 .card {
-    background: #0a2a4a;
-    padding: 20px;
-    border-radius: 8px;
-    width: 200px;
+  background: #0a2a4a;
+  padding: 0px;
+  border-radius: 8px;
+  color: #fff;
+  text-align: center;
 }
 
 /* Setores */
 .setores {
-    background: #f4f4f4;
-    color: #000;
-    padding: 40px 20px;
-    text-align: center;
+  background: #f4f4f4;
+  color: #000;
+  padding: 40px 20px;
+  text-align: center;
 }
 .setores-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 10px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
 }
 .setores-grid div {
-    background: #ddd;
-    padding: 15px;
-    border-radius: 5px;
+  background: #ddd;
+  padding: 15px;
+  border-radius: 5px;
 }
 
 /* Contato */
 .contato {
-    padding: 50px;
-    text-align: center;
-    background: #0f3757;
+  padding: 50px;
+  text-align: center;
+  background: #0f3757;
 }
 
 /* Footer */
 footer {
-    background: #000;
+  background: #000;
+  text-align: center;
+  padding: 15px;
+  color: #fff;
+}
+
+/* Responsivo */
+@media (max-width: 768px) {
+  .facial {
+    flex-direction: column;
     text-align: center;
-    padding: 15px;
+  }
+  .beneficios-content {
+    flex-direction: column;
+    align-items: center;
+  }
+  .setores-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
 }
