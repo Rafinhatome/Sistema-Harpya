@@ -1,156 +1,172 @@
 (() => {
-  'use strict'
+    'use strict'
 
-  const ctx = document.getElementById('myChart')
-  const mesSelect = document.getElementById('mesSelect')
-  const anoSelect = document.getElementById('anoSelect')
+    const ctx = document.getElementById('myChart');
+    const mesSelect = document.getElementById('mesSelect');
+    const anoSelect = document.getElementById('anoSelect');
 
-  let dados = []
+    let dadosAPI = [];
 
-  function criarGrafico(labels, total, diferentes, locaisDiferentes) {
-    if (window.grafico) window.grafico.destroy()
+    // --- Funções do GRÁFICO ---
+    function criarGrafico(labels, totalAcessos) {
+        if (window.grafico) window.grafico.destroy();
 
-    window.grafico = new Chart(ctx, {
-      data: {
-        labels,
-        datasets: [
-          {
-            type: 'line',
-            label: 'Total Acessos',
-            data: total,
-            borderColor: '#007bff',
-            backgroundColor: 'transparent',
-            fill: false,
-            tension: 0,
-            pointBackgroundColor: '#007bff',
-            yAxisID: 'y'
-          },
-          {
-            type: 'bar',
-            label: 'Acessos IP Diferente',
-            data: diferentes,
-            backgroundColor: '#28a745',
-            yAxisID: 'y',
-            barPercentage: 0.5,
-            categoryPercentage: 0.7
-          },
-          {
-            type: 'bar',
-            label: 'Acessos IP e Localização Diferentes',
-            data: locaisDiferentes,
-            backgroundColor: '#dc3545',
-            yAxisID: 'y',
-            barPercentage: 0.5,
-            categoryPercentage: 0.7
-          }
-        ]
-      },
-      options: {
-        plugins: {
-          legend: { display: true },
-          tooltip: { mode: 'index', intersect: false }
-        },
-        scales: {
-          x: {
-            title: { display: true, text: 'Data' }
-          },
-          y: {
-            type: 'linear',
-            display: true,
-            position: 'left',
-            title: { display: true, text: 'Total Acessos (linha)' },
-            beginAtZero: true
-          },
-          y1: {
-            type: 'linear',
-            display: true,
-            position: 'right',
-            grid: { drawOnChartArea: false },
-            title: { display: true, text: 'Acessos Diferentes (colunas)' },
-            beginAtZero: true,
-            max: 3
-          }
+        window.grafico = new Chart(ctx, {
+            data: {
+                labels,
+                datasets: [
+                    {
+                        type: 'line',
+                        label: 'Total Acessos',
+                        data: totalAcessos,
+                        borderColor: '#007bff',
+                        backgroundColor: 'transparent',
+                        fill: false,
+                        tension: 0.4,
+                        pointBackgroundColor: '#007bff',
+                    }
+                ]
+            },
+            options: {
+                plugins: {
+                    legend: { display: true },
+                    tooltip: { mode: 'index', intersect: false }
+                },
+                scales: {
+                    x: {
+                        title: { display: true, text: 'Data' }
+                    },
+                    y: {
+                        type: 'linear',
+                        display: true,
+                        position: 'left',
+                        title: { display: true, text: 'Número de Acessos' },
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    }
+
+    function agruparAcessosPorDia(dadosParaAgrupar) {
+        const somaPorDia = {};
+        
+        if (!dadosParaAgrupar || dadosParaAgrupar.length === 0) {
+            return { labels: [], totalAcessos: [] };
         }
-      }
-    })
-  }
+        
+        dadosParaAgrupar.forEach(item => {
+            if (item && item.dataHora) {
+                const dia = item.dataHora.split(' ')[0];
+                
+                if (!somaPorDia[dia]) {
+                    somaPorDia[dia] = 0;
+                }
+                somaPorDia[dia] += 1;
+            }
+        });
 
-  function filtrarEAgruparDados(mes, ano) {
-    const dadosFiltrados = dados.filter(item => {
-      const [dd, mm, yyyy] = item.data.split('/')
-      return Number(mm) === mes && Number(yyyy) === ano
-    })
+        const datasOrdenadas = Object.keys(somaPorDia).sort((a, b) => {
+            return new Date(a) - new Date(b);
+        });
 
-    const somaPorDia = {}
+        const labels = datasOrdenadas;
+        const totalAcessos = datasOrdenadas.map(d => somaPorDia[d]);
 
-    dadosFiltrados.forEach(item => {
-      const dia = item.data
-      if (!somaPorDia[dia]) {
-        somaPorDia[dia] = {
-          total: 0,
-          diferentes: 0,
-          locaisDiferentes: 0
+        return { labels, totalAcessos };
+    }
+
+    function atualizarTabelaHTML(dados) {
+        const tbody = document.querySelector('#tabelaAcessos tbody');
+        tbody.innerHTML = '';
+
+        if (!dados || dados.length === 0) {
+            const tr = document.createElement('tr');
+            tr.innerHTML = `<td colspan="6">Nenhum dado encontrado para o período.</td>`;
+            tbody.appendChild(tr);
+            return;
         }
-      }
 
-      const acessosNum = Number(item.acessos)
-      somaPorDia[dia].total += acessosNum
+        dados.forEach(item => {
+            if (item && item.dataHora) {
+                const [data, hora] = item.dataHora.split(' ');
+                const [ano, mes, dia] = data.split('-');
+                const dataFormatada = `${dia}/${mes}/${ano}`;
 
-      if (item.ip !== "192.168.45.103") {
-        somaPorDia[dia].diferentes += acessosNum
-      }
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td>${dataFormatada}</td>
+                    <td>${hora}</td>
+                    <td>${item.nome}</td>
+                    <td>${item.ip}</td>
+                    <td>${item.localizacao}</td>
+                `;
+                tbody.appendChild(tr);
+            }
+        });
+    }
 
-      if (
-        item.ip !== "192.168.45.103" &&
-        item.localizacao !== "Rua das Flores, 123, Bairro Primavera, Sao Paulo, SP, Brasil"
-      ) {
-        somaPorDia[dia].locaisDiferentes += acessosNum
-      }
-    })
+    // --- Lógica UNIFICADA para carregar os dados ---
+    async function fetchEAtualizarDashboard() {
+        const totalAcessosElement = document.getElementById('totalAcessos');
+        const totalAcessosDiferentesElement = document.getElementById('totalAcessosDiferentes');
+        const totalAcessosLocalizacaoDiferentesElement = document.getElementById('totalAcessosLocalizaçãoDiferentes');
+        
+        const mes = String(mesSelect.value).padStart(2, '0');
+        const ano = anoSelect.value;
+        
+        // Fetch principal para o gráfico e a tabela (dados por mês/ano)
+        try {
+            const responseAcessos = await fetch(`http://localhost:8080/dashboard/acessos?mes=${mes}&ano=${ano}`);
+            if (!responseAcessos.ok) {
+                throw new Error('Erro na resposta da rede: ' + responseAcessos.statusText);
+            }
+            dadosAPI = await responseAcessos.json();
+            totalAcessosElement.textContent = dadosAPI.length;
 
-    const datasOrdenadas = Object.keys(somaPorDia).sort((a, b) => {
-      const [d1, m1, y1] = a.split('/')
-      const [d2, m2, y2] = b.split('/')
-      return (y1 + m1 + d1).localeCompare(y2 + m2 + d2)
-    })
+            const dadosGrafico = agruparAcessosPorDia(dadosAPI);
+            criarGrafico(dadosGrafico.labels, dadosGrafico.totalAcessos);
+            atualizarTabelaHTML(dadosAPI);
 
-    const labels = datasOrdenadas
-    const total = datasOrdenadas.map(d => somaPorDia[d].total)
-    const diferentes = datasOrdenadas.map(d => somaPorDia[d].diferentes)
-    const locaisDiferentes = datasOrdenadas.map(d => somaPorDia[d].locaisDiferentes)
+        } catch (error) {
+            console.error('Erro ao buscar dados da API de acessos:', error);
+            dadosAPI = [];
+            totalAcessosElement.textContent = 'Erro';
+            atualizarTabelaHTML([]); // Limpa a tabela
+            criarGrafico([], []); // Zera o gráfico
+        }
 
-    return { labels, total, diferentes, locaisDiferentes }
-  }
+        // Fetch para a contagem de acessos com IPs diferentes (independente)
+        try {
+            const responseIpDiferente = await fetch('http://localhost:8080/dashboard/count-ip-diferente');
+            if (!responseIpDiferente.ok) {
+                throw new Error('Erro na resposta da rede para IPs diferentes.');
+            }
+            const totalIpsDiferentes = await responseIpDiferente.json();
+            totalAcessosDiferentesElement.textContent =  totalIpsDiferentes;
+        } catch (error) {
+            console.error('Erro ao buscar contagem de IPs diferentes:', error);
+            totalAcessosDiferentesElement.textContent = '0';
+        }
 
-  function atualizarGrafico() {
-    const mes = Number(mesSelect.value)
-    const ano = Number(anoSelect.value)
+        // Fetch para a contagem de acessos com IPs e Localização diferentes (independente)
+        try {
+            const responseIpLocDiferente = await fetch('http://localhost:8080/dashboard/count-ip-localizacao-diferente');
+            if (!responseIpLocDiferente.ok) {
+                throw new Error('Erro na resposta da rede para IPs e Localização diferentes.');
+            }
+            const totalIpLocDiferentes = await responseIpLocDiferente.json();
+            totalAcessosLocalizacaoDiferentesElement.textContent = totalIpLocDiferentes;
+        } catch (error) {
+            console.error('Erro ao buscar contagem de IPs e Localização diferentes:', error);
+            totalAcessosLocalizacaoDiferentesElement.textContent = '0';
+        }
+    }
 
-    const { labels, total, diferentes, locaisDiferentes } = filtrarEAgruparDados(mes, ano)
-    criarGrafico(labels, total, diferentes, locaisDiferentes)
-  }
+    // --- Event Listeners ---
+    window.onload = fetchEAtualizarDashboard;
 
-  fetch('../assets/data/tabela.csv')
-    .then(response => response.text())
-    .then(csvText => {
-      const resultado = Papa.parse(csvText, {
-        delimiter: ";",
-        header: false,
-        skipEmptyLines: true
-      })
+    mesSelect.addEventListener('change', fetchEAtualizarDashboard);
+    anoSelect.addEventListener('change', fetchEAtualizarDashboard);
 
-      dados = resultado.data.map(linha => ({
-        data: linha[0],
-        acessos: linha[1],
-        ip: linha[2],
-        localizacao: linha[3]
-      }))
-
-      atualizarGrafico()
-    })
-    .catch(err => console.error('Erro ao carregar CSV:', err))
-
-  mesSelect.addEventListener('change', atualizarGrafico)
-  anoSelect.addEventListener('change', atualizarGrafico)
-
-})()
+})();

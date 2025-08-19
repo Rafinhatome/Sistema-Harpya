@@ -2,6 +2,7 @@ package com.harpya.harpya_spring_boot.model;
 
 import org.springframework.web.bind.annotation.CrossOrigin;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import jakarta.persistence.Column;
@@ -41,6 +42,12 @@ public class Usuario {
     @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_endereco", referencedColumnName = "id")
     private Endereco enderecoUsuario;
+    
+    @JsonIgnore
+    private String ip;
+    
+    @JsonIgnore
+    private String localizacao;
 
     public Usuario() {}
 
@@ -101,5 +108,21 @@ public class Usuario {
 
     public void setEnderecoUsuario(Endereco enderecoUsuario) {
         this.enderecoUsuario = enderecoUsuario;
+    }
+    
+    public String getIp() {
+        return ip;
+    }
+
+    public void setIp(String ip) {
+        this.ip = ip;
+    }
+
+    public String getLocalizacao() {
+        return localizacao;
+    }
+
+    public void setLocalizacao(String localizacao) {
+        this.localizacao = localizacao;
     }
 }
