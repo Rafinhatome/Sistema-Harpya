@@ -306,54 +306,80 @@
                 </div>
             </div>
             <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
-                <div
-                    class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-                    <h1 class="h2">Dashboard Principal</h1>
-                    <div class="btn-toolbar mb-2 mb-md-0">
-                          <div class="btn-group">
-                                <button type="button" class="btn btn-sm btn-outline-secondary dropdown-toggle d-flex align-items-center gap-1" data-bs-toggle="dropdown" aria-expanded="false">
-                                <svg class="bi" aria-hidden="true">
-                                    <use xlink:href="#calendar3"></use>
-                                </svg>
-                                Data
-                                </button>
-                                <div class="dropdown-menu p-3">
-                                <div class="mb-2">
-                                    <label for="mesSelect" class="form-label">Mês:</label>
-                                    <select id="mesSelect" class="form-select form-select-sm">
-                                    <option value="1">Janeiro</option>
-                                    <option value="2">Fevereiro</option>
-                                    <option value="3">Março</option>
-                                    <option value="4">Abril</option>
-                                    <option value="5">Maio</option>
-                                    <option value="6" selected>Junho</option>
-                                    <option value="7">Julho</option>
-                                    <option value="8">Agosto</option>
-                                    <option value="9">Setembro</option>
-                                    <option value="10">Outubro</option>
-                                    <option value="11">Novembro</option>
-                                    <option value="12">Dezembro</option>
-                                    </select>
-                                </div>
+<div
+    class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+    <h1 class="h2">Dashboard Principal</h1>
+    <div class="btn-toolbar mb-2 mb-md-0">
+        <div class="btn-group">
+            <button type="button"
+                class="btn btn-sm btn-outline-secondary dropdown-toggle d-flex align-items-center gap-1"
+                data-bs-toggle="dropdown" aria-expanded="false">
+                <svg class="bi" aria-hidden="true">
+                    <use xlink:href="#calendar3"></use>
+                </svg>
+                Data
+            </button>
+            <div class="dropdown-menu p-3">
+                <div class="mb-2">
+                    <label for="mesSelect" class="form-label">Mês:</label>
+                    <select id="mesSelect" class="form-select form-select-sm">
+                        <option value="1">Janeiro</option>
+                        <option value="2">Fevereiro</option>
+                        <option value="3">Março</option>
+                        <option value="4">Abril</option>
+                        <option value="5">Maio</option>
+                        <option value="6">Junho</option>
+                        <option value="7">Julho</option>
+                        <option value="8">Agosto</option>
+                        <option value="9">Setembro</option>
+                        <option value="10">Outubro</option>
+                        <option value="11">Novembro</option>
+                        <option value="12">Dezembro</option>
+                    </select>
+                </div>
 
-                                <div>
-                                    <label for="anoSelect" class="form-label">Ano:</label>
-                                    <select id="anoSelect" class="form-select form-select-sm">
-                                    <option value="2025" selected>2025</option>
-                                    <option value="2024">2024</option>
-                                    <option value="2023">2023</option>
-                                    </select>
-                                </div>
-                                </div>
-                            </div>
-                            </div>
-                </div> 
+                <div>
+                    <label for="anoSelect" class="form-label">Ano:</label>
+                    <select id="anoSelect" class="form-select form-select-sm">
+                        <option value="2025">2025</option>
+                        <option value="2024">2024</option>
+                        <option value="2023">2023</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const mesSelect = document.getElementById("mesSelect");
+    const anoSelect = document.getElementById("anoSelect");
+
+    const hoje = new Date();
+    const mesAtual = hoje.getMonth() + 1; // getMonth() retorna 0-11
+    const anoAtual = hoje.getFullYear();
+
+    // Define mês atual
+    if (mesSelect) {
+      mesSelect.value = mesAtual;
+    }
+
+    // Define ano atual (se existir no select)
+    if (anoSelect) {
+      const optionAno = [...anoSelect.options].find(opt => opt.value == anoAtual);
+      if (optionAno) {
+        anoSelect.value = anoAtual;
+      }
+    }
+  });
+</script>
                 <div class="row mb-4">
                 <div class="col-md-4">
                     <div class="card text-bg-success h-100">
                     <div class="card-body">
                         <h5 class="card-title">Acessos ao sistema</h5>
-                        <p id="totalAcessos" class="card-text display-6">73</p>
+                        <p id="totalAcessos" class="card-text display-6"></p>
                     </div>
                     </div>
                 </div>
@@ -361,7 +387,7 @@
                     <div class="card text-bg-warning h-100">
                     <div class="card-body">
                         <h5 class="card-title">Acessos com IPs diferentes</h5>
-                        <p id="totalAcessosDiferentes" class="card-text display-6">1</p>
+                        <p id="totalAcessosDiferentes" class="card-text display-6"></p>
                     </div>
                     </div>
                 </div>
@@ -369,7 +395,7 @@
                     <div class="card text-bg-danger h-100">
                     <div class="card-body">
                         <h5 class="card-title">Acessos com IPs e localização diferentes</h5>
-                        <p id="totalAcessosLocalizaçãoDiferentes" class="card-text display-6">1</p>
+                        <p id="totalAcessosLocalizaçãoDiferentes" class="card-text display-6"></p>
                     </div>
                     </div>
                 </div>
@@ -381,7 +407,8 @@
                         <thead>
                             <tr>
                                 <th scope="col">Data</th>
-                                <th scope="col">Acessos</th>
+                                <th scope="col">Hora</th>
+                                <th scope="col">Usuário</th>
                                 <th scope="col">IP</th>
                                 <th scope="col">Localização</th>
                             </tr>
@@ -398,7 +425,7 @@
         integrity="sha384-eI7PSr3L1XLISH8JdDII5YN/njoSsxfbrkCTnJrzXt+ENP5MOVBxD+l6sEG4zoLp" crossorigin="anonymous"
         class="astro-vvvwv3sm"></script>
     <script src="../js/dashboard.js" class="astro-vvvwv3sm"></script>
-    <script src="../js/tabela.js"></script>
+    <script src="../js/dashboard.js"></script>
 </body>
 
 </html>

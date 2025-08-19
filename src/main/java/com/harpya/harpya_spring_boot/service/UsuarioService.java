@@ -21,10 +21,12 @@ public class UsuarioService {
     private PasswordEncoder passwordEncoder;
 
     // Create
-    public Usuario InserirUsuario(Usuario u) {
+    public Usuario InserirUsuario(Usuario u, String ip, String localizazao) {
         // Criptografa a senha antes de salvar
         String senhaCriptografada = passwordEncoder.encode(u.getSenha_hash());
         u.setSenha_hash(senhaCriptografada);
+        u.setIp(ip);
+        u.setLocalizacao(localizazao);
         return repo.save(u);
     }
 

@@ -1,7 +1,10 @@
+// Login.java
+
 package com.harpya.harpya_spring_boot.model;
 
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 @Entity
 @Table(name = "login")
@@ -9,14 +12,15 @@ public class Login {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long idLogin; // id auto-increment
+    private Long idLogin;
 
-    private Long idUsuario; // referência ao usuário
+    private Long idUsuario;
     private String nome;
     private String email;
     private String ip;
     private String localizacao;
 
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime dataHora;
 
     // Getters e Setters
@@ -33,7 +37,7 @@ public class Login {
         return idUsuario;
     }
 
-    public void setIdUsuario(int idUsuario2) {
+    public void setIdUsuario(long idUsuario2) {
         this.idUsuario = (long) idUsuario2;
     }
 
