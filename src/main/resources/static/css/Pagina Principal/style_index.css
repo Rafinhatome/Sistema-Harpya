@@ -42,28 +42,30 @@ header {
   text-decoration: none;
 }
 
-/* Hero */
-.hero {
+/* slogan */
+.slogan {
   text-align: center;
   padding: 50px 20px;
   background: #000b23;
 }
-.hero h1 {
+.slogan h1 {
   font-size: 28px;
   font-weight: bold;
 }
-.hero p {
+.slogan p {
   font-size: 16px;
   margin-bottom: 20px;
 }
-.hero-img {
+.slogan-img {
   max-width: 600px;
+  margin-bottom: -5px;
 }
-.hero-bg {
-  width: 100%;
-  height: auto;
+.montanhas-img {
+  width: 100vw;
+  margin-left: 50%;
+  transform: translateX(-50%);
   display: block;
-  margin: 0 auto;
+  position: relative;
 }
 
 /* Middle-art */
@@ -106,42 +108,10 @@ header {
   border: none;
   cursor: pointer;
 }
-.btn-primario {
-  background: #0055aa;
-  color: #fff;
-  padding: 12px 25px;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  font-weight: bold;
-  transition: background 0.3s;
-}
-.btn-secundario {
-  background: #ccc;
-  color: #000;
-}.btn-primario:hover {
-  background: #003d7a;
-}
-
-.btn-secundario {
-  background: transparent;
-  color: #fff;
-  padding: 12px 25px;
-  border: 2px solid #fff;
-  border-radius: 4px;
-  cursor: pointer;
-  font-weight: bold;
-  transition: all 0.3s;
-}
-
-.btn-secundario:hover {
-  background: rgba(255, 255, 255, 0.1);
-}
-
 .facial-img img {
   max-width: 350px;
   width: 100%;
-  border-radius: 8px; /* Opcional: se quiser bordas arredondadas na imagem */
+  border-radius: 8px;
 }
 
 /* Benefícios */
@@ -152,6 +122,7 @@ header {
 }
 .beneficios-content {
   display: flex;
+  justify-content: center;
   gap: 40px;
   max-width: 1100px;
   margin: 30px auto 0;
@@ -162,6 +133,9 @@ header {
   max-width: 450px;
   width: 100%;
   height: auto;
+  border-radius: 8px;
+  display: block;
+  margin: 0 auto;
 }
 .cards {
   display: flex;
@@ -180,7 +154,7 @@ header {
 
 /* Setores */
 .setores {
-  background: #f4f4f4;
+  background: #b8c5cf;
   color: #000;
   padding: 40px 20px;
   text-align: center;
@@ -188,40 +162,97 @@ header {
 .setores-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 10px;
+  gap: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 90%; 
 }
-.setores-grid div {
-  background: #ddd;
-  padding: 15px;
-  border-radius: 5px;
+.setores-grid .card {
+  background: #ffffff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
 }
+.setores-grid .card:hover {
+  transform: translateY(-5px);
+}
+.setores-grid h1 {
+  font-size: 1.2rem;
+  margin-bottom: 10px;
+  color: #000;
+}
+.setores-grid p {
+  font-size: 0.9rem;
+  color: #333;
+  line-height: 1.5;
+}
+
 
 /* Contato */
 .contato {
   padding: 50px;
   text-align: center;
-  background: #0f3757;
+  background: #ffffff;
+  color: #000;
+}
+
+.contato-img {
+  max-width: 300px;
+  margin: 0 auto 20px;
+  display: block;
+}
+
+.contato-form {
+  max-width: 600px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
 }
 
 /* Footer */
 footer {
-  background: #000;
+  background: #0A2E43;
   text-align: center;
   padding: 15px;
   color: #fff;
 }
 
-/* Responsivo */
+/* Responsivo para facial*/
 @media (max-width: 768px) {
   .facial {
     flex-direction: column;
     text-align: center;
   }
+}
+
+/* Responsivo para setores */
+@media (max-width: 1024px) {
+  .setores-grid {
+    grid-template-columns: repeat(2, 1fr);
+    width: 85%;
+  }
+}
+
+@media (max-width: 768px) {
+  .setores-grid {
+    grid-template-columns: 1fr;
+    width: 80%;
+  }
+}
+
+/* Responsivo para beneficios */
+@media (max-width: 900px) {
   .beneficios-content {
     flex-direction: column;
     align-items: center;
   }
-  .setores-grid {
-    grid-template-columns: repeat(2, 1fr);
+  .beneficios-img {
+    max-width: 80%;
+    margin-bottom: 20px;
+  }
+  .cards {
+    max-width: 100%;
   }
 }

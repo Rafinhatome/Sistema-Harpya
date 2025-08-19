@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Harpy - Segurança Inteligente</title>
   <link rel="stylesheet" href="../css/Pagina Principal/style_index.css">
+  <link rel="stylesheet" href="../css/Pagina Principal/anima-pagina-inicial.css">
 </head>
 <body>
   <!-- Header -->
@@ -20,12 +21,12 @@
     </nav>
   </header>
 
-  <!-- Hero -->
-  <section class="hero">
+  <!-- slogan -->
+  <section class="slogan">
     <h1>A FORÇA DA MAIOR ÁGUIA PARA PROTEGER SUAS SENHAS</h1>
     <p>Use reconhecimento facial e a força da Harpy para criar autenticações confiáveis e seguras.</p>
-    <img src="../assets/video/MicrosoftTeams-video (2).gif" alt="Águia Harpy" class="hero-img">
-    <img src="../assets/imagens/—Pngtree—transparent wireframe wave 3d background_5325100 (3).png" alt="montanhas" class="hero-bg">
+    <img src="../assets/video/Pausar GIF shared image.gif" alt="Águia Harpy" class="slogan-img">
+    <img src="../assets/imagens/—Pngtree—transparent wireframe wave 3d background_5325100 (3).png" alt="montanhas" class="montanhas-img">
   </section>
 
   <!-- Espaço entre seções -->
@@ -36,10 +37,7 @@
     <div class="facial-text">
       <h2>RECONHECIMENTO FACIAL INTELIGENTE</h2>
       <p>Autenticação avançada que reconhece o rosto com precisão e impede acessos não autorizados.</p>
-      <div class="buttons">
-        <button class="btn-primario">Iniciar Teste Facial</button>
-        <button class="btn-secundario">Saiba Mais</button>
-      </div>
+      
     </div>
     <div class="facial-img">
       <img src="../assets/imagens/ChatGPT Image 11 de ago. de 2025, 09_12_49.png" alt="Escaneamento Facial">
@@ -73,16 +71,54 @@
   <section class="setores">
     <h2>SOLUÇÕES POR SETOR</h2>
     <div class="setores-grid">
-      <div>Segurança Aeroportuária</div>
-      <div>Instituições Financeiras</div>
-      <div>Órgãos Públicos</div>
-      <div>Empresas Privadas</div>
+
+        <div class="card">
+          <h1>Indústrias Varejistas</h1>
+          <img src="../assets/imagens/varejo.png" alt="varejo" width="80" height="80">
+          <p>Monitoramento inteligente para reduzir perdas operacionais
+             e otimizar a experiência do consumidor</p>
+        </div>
+
+        <div class="card">
+          <h1>Instituições Financeiras</h1>
+          <img src="../assets/imagens/financeiro.png" alt="financeiro" width="80" height="80">
+          <p>Soluções de reconhecimento facial que elevam o 
+            nível de autenticação e reduzem fraudes</p>
+        </div>
+
+        <div class="card">
+          <h1>Órgãos Públicos</h1>
+          <img src="../assets/imagens/publico.png" alt="publico" width="80" height="80" >
+          <p>Tecnologia de identificação precisa para reforçar a 
+            segurança e agilizar serviços à população</p>
+        </div>
+  
+        <div class="card">
+          <h1>Empresas Privadas</h1>
+          <img src="../assets/imagens/companhia.png" alt="companhia" width="80" height="80">
+          <p>Sistemas de segurança integrados que protegem patrimônio, 
+            dados e colaboradores de forma escalável</p>
+        </div>
     </div>
   </section>
 
   <!-- Contato -->
   <section class="contato">
-    <h2>Fale Conosco</h2>
+    <img src="../assets/imagens/contact-us.png" alt="contato-img" class="contato-img">
+    <form action="fale conosco" method="post" class="contato-form">
+      <h2>FALE CONOSCO</h2>
+      <p>Quer saber mais sobre nossas soluções? Preencha o formulário abaixo:</p>
+      <label for="nome">Nome:</label>
+      <input type="text" id="nome" name="nome" required>
+
+      <label for="email">E-mail:</label>
+      <input type="email" id="email" name="email" required>
+
+      <label for="mensagem">Mensagem:</label>
+      <textarea id="mensagem" name="mensagem" rows="4" required></textarea>
+
+      <button type="submit">Enviar</button>
+    </form>
   </section>
 
   <!-- Footer -->
