@@ -42,24 +42,24 @@ header {
   text-decoration: none;
 }
 
-/* Hero */
-.hero {
+/* slogan */
+.slogan {
   text-align: center;
   padding: 50px 20px;
   background: #000b23;
 }
-.hero h1 {
+.slogan h1 {
   font-size: 28px;
   font-weight: bold;
 }
-.hero p {
+.slogan p {
   font-size: 16px;
   margin-bottom: 20px;
 }
-.hero-img {
+.slogan-img {
   max-width: 600px;
 }
-.hero-bg {
+.slogan-bg {
   width: 100%;
   height: auto;
   display: block;
@@ -180,7 +180,7 @@ header {
 
 /* Setores */
 .setores {
-  background: #f4f4f4;
+  background: #b8c5cf;
   color: #000;
   padding: 40px 20px;
   text-align: center;
@@ -191,9 +191,20 @@ header {
   gap: 10px;
 }
 .setores-grid div {
-  background: #ddd;
+  background: #ffffff;
   padding: 15px;
   border-radius: 5px;
+}
+
+.setores-grid h1 {
+  font-size: 1.2rem;
+  margin-bottom: 10px;
+  color: #000;
+}
+
+.setores-grid p {
+  font-size: 0.9rem;
+  color: #333;
 }
 
 /* Contato */
