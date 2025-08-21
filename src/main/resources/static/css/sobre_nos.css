@@ -1,0 +1,218 @@
+/* Reset */
+@font-face {
+  font-family: 'SpaceRanger';
+  src: url('../font/space-ranger/spacerangercond.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Beiruti';
+  src: url('../font/beiruti/Beiruti-Regular.ttf') format('truetype');
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: #000C26;
+  color: white;
+  font-family: Arial, sans-serif;
+  line-height: 1.6;
+  position: relative;
+  z-index: 1;
+  overflow-x: hidden;
+}
+
+
+/* Marca d’água no fundo */
+.background-overlay {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  height: 90%;
+  background: url("../assets/imagens/sobre nos.png") no-repeat 45% center;
+  background-size: 720px;
+  opacity: 0.4;
+  z-index: -1;
+  pointer-events: none;
+}
+
+/* Navbar */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.8);
+  padding: 15px 10px;
+  position: fixed;
+  width: 100%;
+  top: 0;
+  z-index: 1000;
+}
+
+.logo {
+  color: #F8F8FF;
+  font-size: 22px;
+  letter-spacing: 2px;
+  font-family: 'SpaceRanger';
+}
+
+.menu {
+  list-style: none;
+  display: flex;
+  gap: 20px;
+}
+
+.menu li a {
+  text-decoration: none;
+  color: white;
+  font-size: 14px;
+  transition: 0.3s;
+}
+
+.menu li a:hover {
+  color: #00BFFF;
+}
+
+/* Seção Sobre Nós */
+.sobre-nos {
+  text-align: center;
+  padding: 100px 80px 40px;
+}
+
+.sobre-nos h1 {
+  border-bottom: 2px solid white;
+  font-size: 50px;
+  color: #ffffff;
+  margin-bottom: 30px;
+}
+
+.conteudo {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 30px;
+  gap: 40px;
+}
+
+.coluna {
+  width: 48%;
+  text-align: justify;
+}
+
+.coluna h2 {
+  font-size: 28px;
+  margin-bottom: 20px;
+  display: inline-block;
+  padding-bottom: 5px;
+}
+
+.coluna p {
+  color: #ddd;
+}
+
+/* Seção Equipe */
+.equipe {
+  text-align: center;
+  padding: 50px 80px;
+}
+
+.equipe h2 {
+  font-size: 32px;
+  margin-bottom: 40px;
+  border-bottom: 2px solid white;
+  display: inline-block;
+  padding-bottom: 5px;
+}
+
+.cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  justify-content: center;
+}
+
+.card {
+  background: rgba(255, 255, 255, 0.05);
+  padding: 20px;
+  border-radius: 12px;
+  color: white;
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+  align-items: center; /* ALINHAMENTO VERTICAL */
+  text-align: justify;
+  transition: background 0.3s, transform 0.3s;
+}
+
+.card:hover {
+  background: rgba(255, 255, 255, 0.15);
+  transform: translateY(-5px);
+}
+
+.card img {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #00BFFF;
+}
+
+.card h3 {
+  margin: 0 0 5px 0;
+  font-size: 1.2rem;
+  color: #00BFFF;
+}
+
+.card p {
+  font-size: 14px;
+  color: #ddd;
+  margin: 0;
+}
+
+.card-texto {
+  display: flex;
+  flex-direction: column;
+}
+
+.card-texto h3 {
+  margin: 0 0 5px 0;
+  font-size: 1.2rem;
+  color: #00BFFF;
+}
+
+.card-texto p {
+  font-size: 14px;
+  color: #ddd;
+  margin: 0;
+}
+
+/* Responsivo */
+@media (max-width: 900px) {
+  .cards {
+    grid-template-columns: 1fr 1fr;
+  }
+  .conteudo {
+    flex-direction: column;
+    align-items: center;
+  }
+  .coluna {
+    width: 100%;
+  }
+}
+
+@media (max-width: 600px) {
+  .navbar {
+    padding: 15px 20px;
+  }
+  .menu {
+    gap: 10px;
+  }
+  .sobre-nos, .equipe {
+    padding: 80px 20px 20px;
+  }
+  .cards {
+    grid-template-columns: 1fr;
+  }
+}
