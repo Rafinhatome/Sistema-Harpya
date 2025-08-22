@@ -1,12 +1,17 @@
-/* Reset básico */
-body {
+/* ---------- Reset ---------- */
+* {
   margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body {
   font-family: Arial, sans-serif;
-  background-color: #f4f4f4;
+  background: #f4f4f4;
   color: #fff;
+  line-height: 1.5;
 }
 
-/* Fonts */
+/* ---------- Fonts ---------- */
 @font-face {
   font-family: 'SpaceRanger';
   src: url('../font/space-ranger/spacerangercond.ttf') format('truetype');
@@ -16,9 +21,9 @@ body {
   src: url('../font/beiruti/Beiruti-Regular.ttf') format('truetype');
 }
 
-/* Header */
+/* ---------- Header ---------- */
 header {
-  background-color: #000;
+  background: #000;
 }
 .principal {
   display: flex;
@@ -28,7 +33,6 @@ header {
 }
 .logo {
   font-family: 'SpaceRanger';
-  color: #fff;
   font-size: 2rem;
 }
 .menu {
@@ -37,12 +41,12 @@ header {
   gap: 20px;
   font-family: 'Beiruti';
 }
-.menu li a {
+.menu a {
   color: #fff;
   text-decoration: none;
 }
 
-/* slogan */
+/* ---------- Slogan ---------- */
 .slogan {
   text-align: center;
   padding: 50px 20px;
@@ -58,55 +62,40 @@ header {
 }
 .slogan-img {
   max-width: 600px;
-  margin-bottom: -5px;
 }
 .montanhas-img {
-  width: 100vw;
-  margin-left: 50%;
-  transform: translateX(-50%);
+  width: 100%;
   display: block;
-  position: relative;
+  margin: 0 auto;
 }
 
-/* Middle-art */
+/* ---------- Middle-art ---------- */
 .middle-art {
   background: linear-gradient(to bottom, #000b23, #0f3757);
-  padding: 5% 0;
+  padding: 60px 0;
 }
 
-/* Facial */
+/* ---------- Facial ---------- */
 .facial {
   display: flex;
   justify-content: center;
   align-items: center;
   gap: 40px;
   padding: 80px 20px;
-  background-color: #0f3757;
-  flex-wrap: wrap; /* responsivo */
+  background: #0f3757;
+  flex-wrap: wrap;
 }
 .facial-text {
   max-width: 500px;
 }
 .facial-text h2 {
   margin-bottom: 15px;
-  font-size: 2rem; /* Título destacado */
-  text-transform: uppercase; /* Para ficar igual à imagem */
+  font-size: 2rem;
+  text-transform: uppercase;
 }
 .facial-text p {
   font-size: 1.1rem;
   margin-bottom: 25px;
-  line-height: 1.5;
-}
-.facial-text .buttons {
-  display: flex;
-  gap: 15px;
-  margin-top: 20px;
-}
-.facial-text button {
-  margin: 5px;
-  padding: 10px 20px;
-  border: none;
-  cursor: pointer;
 }
 .facial-img img {
   max-width: 350px;
@@ -114,11 +103,12 @@ header {
   border-radius: 8px;
 }
 
-/* Benefícios */
+/* ---------- Benefícios ---------- */
 .beneficios {
   text-align: center;
-  padding: 50px 20px 0px;
+  padding: 50px 20px;
   background: #7CA8C1;
+  color: #000;
 }
 .beneficios-content {
   display: flex;
@@ -126,33 +116,27 @@ header {
   gap: 40px;
   max-width: 1100px;
   margin: 30px auto 0;
-  align-items: flex-start;
   flex-wrap: wrap;
+  align-items: flex-start;
 }
 .beneficios-img {
   max-width: 450px;
-  width: 100%;
-  height: auto;
   border-radius: 8px;
-  display: block;
-  margin: 0 auto;
 }
 .cards {
   display: flex;
   flex-direction: column;
   gap: 20px;
   max-width: 420px;
-  width: 100%;
 }
 .card {
   background: #0a2a4a;
-  padding: 0px;
+  padding: 20px;
   border-radius: 8px;
   color: #fff;
-  text-align: center;
 }
 
-/* Setores */
+/* ---------- Setores ---------- */
 .setores {
   background: #b8c5cf;
   color: #000;
@@ -161,18 +145,17 @@ header {
 }
 .setores-grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
   gap: 20px;
   max-width: 1200px;
   margin: 0 auto;
-  width: 90%; 
 }
 .setores-grid .card {
-  background: #ffffff;
+  background: #fff;
   padding: 20px;
   border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  transition: transform 0.3s ease;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  transition: transform 0.3s;
 }
 .setores-grid .card:hover {
   transform: translateY(-5px);
@@ -180,38 +163,55 @@ header {
 .setores-grid h1 {
   font-size: 1.2rem;
   margin-bottom: 10px;
-  color: #000;
 }
 .setores-grid p {
   font-size: 0.9rem;
   color: #333;
-  line-height: 1.5;
 }
 
-
-/* Contato */
+/* ---------- Contato ---------- */
 .contato {
-  padding: 50px;
-  text-align: center;
-  background: #ffffff;
+  padding: 50px 20px;
+  background: #fff;
   color: #000;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 40px;
+  flex-wrap: wrap;
 }
-
 .contato-img {
   max-width: 300px;
-  margin: 0 auto 20px;
-  display: block;
+  width: 100%;
 }
-
 .contato-form {
-  max-width: 600px;
-  margin: 0 auto;
+  max-width: 500px;
+  width: 100%;
   display: flex;
   flex-direction: column;
   gap: 15px;
 }
+.contato-form input,
+.contato-form textarea {
+  padding: 12px;
+  border: 1px solid #aaa;
+  border-radius: 6px;
+  font-size: 1rem;
+}
+.contato-form button {
+  padding: 12px;
+  background: #0A2E43;
+  border: none;
+  border-radius: 6px;
+  color: #fff;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+.contato-form button:hover {
+  background: #09496a;
+}
 
-/* Footer */
+/* ---------- Footer ---------- */
 footer {
   background: #0A2E43;
   text-align: center;
@@ -219,40 +219,14 @@ footer {
   color: #fff;
 }
 
-/* Responsivo para facial*/
+/* ---------- Responsivo ---------- */
 @media (max-width: 768px) {
   .facial {
     flex-direction: column;
     text-align: center;
   }
-}
-
-/* Responsivo para setores */
-@media (max-width: 1024px) {
-  .setores-grid {
-    grid-template-columns: repeat(2, 1fr);
-    width: 85%;
-  }
-}
-
-@media (max-width: 768px) {
-  .setores-grid {
-    grid-template-columns: 1fr;
-    width: 80%;
-  }
-}
-
-/* Responsivo para beneficios */
-@media (max-width: 900px) {
-  .beneficios-content {
+  .contato {
     flex-direction: column;
     align-items: center;
-  }
-  .beneficios-img {
-    max-width: 80%;
-    margin-bottom: 20px;
-  }
-  .cards {
-    max-width: 100%;
   }
 }
