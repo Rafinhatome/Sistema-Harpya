@@ -153,10 +153,12 @@ body {
 
 .card img {
   width: 100px;
-  height: 100px;
+  aspect-ratio: 1 / 1;   /* garante proporção quadrada */
   border-radius: 50%;
-  object-fit: cover;
+  object-fit: cover;      /* corta sem deformar */
+  object-position: center;/* foca no centro */
   border: 2px solid #00BFFF;
+  display: block;
 }
 
 .card h3 {
