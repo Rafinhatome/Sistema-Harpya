@@ -3,8 +3,8 @@ package com.harpya.harpya_spring_boot.controller;
 import com.harpya.harpya_spring_boot.model.Usuario;
 import com.harpya.harpya_spring_boot.service.LoginService;
 import com.harpya.harpya_spring_boot.service.UsuarioService;
-import com.harpya.harpya_spring_boot.service.reconhecimentoFacialService;
-import com.harpya.harpya_spring_boot.service.GeoIpService; // Importe o novo serviço
+import com.harpya.harpya_spring_boot.service.FacialService;
+import com.harpya.harpya_spring_boot.service.GeoIpService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -32,14 +32,15 @@ public class UsuarioController {
     private LoginService loginService;
 
     @Autowired
-    private reconhecimentoFacialService reconhecimentoFacialService;
+    private FacialService FacialService;
     
     @Autowired
-    private GeoIpService geoIpService; // Injete o serviço de geolocalização
+    private GeoIpService geoIpService;
 
     // -------------------- LOGIN VIA JSON --------------------
     @PostMapping("/html/login")
     public ResponseEntity<String> login(@RequestBody Usuario loginData, HttpServletRequest request) {
+        // ... CÓDIGO DO SEU LOGIN EXISTENTE AQUI ...
         try {
             if (loginData.getEmailUsuario() == null || loginData.getEmailUsuario().isBlank() ||
                 loginData.getSenha_hash() == null || loginData.getSenha_hash().isBlank()) {
@@ -76,7 +77,51 @@ public class UsuarioController {
                     .body("Erro interno: " + e.getMessage());
         }
     }
+    
+    // -------------------- NOVO ENDPOINT DE LOGIN COM RECONHECIMENTO FACIAL --------------------
+    @PostMapping("/login-com-rosto")
+    public ResponseEntity<?> loginComReconhecimento(@RequestBody Usuario loginData, HttpServletRequest request) {
+        try {
+            if (loginData.getEmailUsuario() == null || loginData.getEmailUsuario().isBlank() ||
+                loginData.getSenha_hash() == null || loginData.getSenha_hash().isBlank()) {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Email e senha são obrigatórios.");
+            }
 
+            Usuario usuario = servico.buscarPorEmail(loginData.getEmailUsuario());
+
+            if (usuario != null && passwordEncoder.matches(loginData.getSenha_hash(), usuario.getSenha_hash())) {
+                
+                // --- INÍCIO DA LÓGICA DE REGISTRO DE LOGIN ---
+                // Captura o IP do usuário
+                String ip = request.getHeader("X-Forwarded-For");
+                if (ip == null || ip.isEmpty()) {
+                    ip = request.getRemoteAddr();
+                }
+
+                // Delega o registro do login ao LoginService, passando o IP
+                loginService.registrarLogin(
+                    usuario.getId(),
+                    usuario.getNomeUsuario(),
+                    usuario.getEmailUsuario(),
+                    ip
+                );
+                // --- FIM DA LÓGICA DE REGISTRO DE LOGIN ---
+
+                // Se o e-mail e a senha estiverem corretos, retorna todo o objeto Usuario
+                // O `faceEmbedding` será incluído automaticamente no JSON de resposta
+                return ResponseEntity.ok().body(usuario);
+            } else {
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Email ou senha inválidos.");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Erro interno: " + e.getMessage());
+        }
+    }
+    
+    
+    // ---
+    
     // -------------------- CRUD DE USUÁRIOS --------------------
     @GetMapping("/{id}")
     public ResponseEntity<Usuario> buscarPorId(@PathVariable int id) {
@@ -90,6 +135,9 @@ public class UsuarioController {
 
     @PostMapping
     public ResponseEntity<Usuario> inserirUsuario(@RequestBody Usuario u, HttpServletRequest request) {
+        // A sua entidade `Usuario` já foi modificada para ter o campo 'faceEmbedding'
+        // O Spring Boot já vai mapear o JSON do frontend para a sua entidade `u`.
+
         // Captura o IP do usuário
         String ip = request.getHeader("X-Forwarded-For");
         if (ip == null || ip.isEmpty()) {
@@ -99,7 +147,7 @@ public class UsuarioController {
         // Busca a localização usando o serviço de IP
         String localizacao = geoIpService.getLocalizationByIp(ip);
         
-        // Chama o serviço para inserir o usuário com IP e localização
+        // Chama o serviço para inserir o usuário com IP, localização e o novo campo faceEmbedding
         Usuario novoUsuario = servico.InserirUsuario(u, ip, localizacao);
         
         return ResponseEntity.status(HttpStatus.CREATED).body(novoUsuario);
@@ -120,12 +168,17 @@ public class UsuarioController {
         servico.deletarUsuario(id);
     }
 
-    // -------------------- RECONHECIMENTO FACIAL --------------------
+    // ---
+    
+    // -------------------- REMOVENDO OS ENDPOINTS ANTIGOS DE RECONHECIMENTO FACIAL --------------------
+    // Não precisamos mais deles. A lógica de reconhecimento será diretamente no login.
+    // Você pode apagar os métodos 'cadastrarRosto' e 'loginFacial'
+    /*
     @PostMapping("/cadastro-facial/{idUsuario}")
     public ResponseEntity<String> cadastrarRosto(@PathVariable String idUsuario,
                                                  @RequestBody Map<String, String> payload) {
         String imagemBase64 = payload.get("imagem");
-        boolean sucesso = reconhecimentoFacialService.cadastrarRosto(idUsuario, imagemBase64);
+        boolean sucesso = FacialService.cadastrarRosto(idUsuario, imagemBase64);
         if (sucesso) {
             return ResponseEntity.ok("Rosto cadastrado com sucesso!");
         } else {
@@ -136,11 +189,12 @@ public class UsuarioController {
     @PostMapping("/login-facial")
     public ResponseEntity<String> loginFacial(@RequestBody Map<String, String> payload) {
         String imagemBase64 = payload.get("imagem");
-        String idUsuario = reconhecimentoFacialService.loginFacial(imagemBase64);
+        String idUsuario = FacialService.loginFacial(imagemBase64);
         if (idUsuario != null) {
             return ResponseEntity.ok("Login bem-sucedido para o usuário ID: " + idUsuario);
         } else {
             return ResponseEntity.status(401).body("Rosto não reconhecido.");
         }
     }
+    */
 }

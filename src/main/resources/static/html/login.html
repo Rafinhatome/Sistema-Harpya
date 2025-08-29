@@ -31,10 +31,10 @@
         .b-example-divider {
             width: 100%;
             height: 3rem;
-            background-color: #0000001a;
+            background-color: rgba(0, 0, 0, 0.1);
             border: solid rgba(0, 0, 0, .15);
             border-width: 1px 0;
-            box-shadow: inset 0 .5em 1.5em #0000001a, inset 0 .125em .5em #00000026
+            box-shadow: inset 0 .5em 1.5em rgba(0, 0, 0, 0.1), inset 0 .125em .5em rgba(0, 0, 0, 0.15)
         }
 
         .b-example-vr {
@@ -103,7 +103,6 @@
 
         .form-signin {
             background-color: rgba(0, 0, 0, 0.6);
-            /* Fundo escuro com transparência */
             padding: 2rem;
             border-radius: 12px;
             color: #fff;
@@ -183,7 +182,6 @@
             </li>
         </ul>
     </div>
-    <body class="d-flex align-items-center py-4 bg-body-tertiary">
     <main class="form-signin w-100 m-auto">
         <form method="post" action="/usuarios/html/login" id="loginForm">
             <h1 class="h3 mb-3 fw-normal">Faça o Login</h1>
@@ -201,6 +199,11 @@
             </div>
             <button type="submit" class="btn btn-primary w-100 py-2">Login</button>
         </form>
+
+        <div id="facial-recognition-container" style="display: none; text-align: center;">
+            <p id="status-message" class="text-white mt-3"></p>
+            <video id="webcam-video" width="300" height="225" autoplay class="rounded"></video>
+        </div>
 
         <div class="mt-3">
             <button type="button" class="btn btn-secondary w-100 py-2" data-bs-toggle="modal" data-bs-target="#modalAddUser">
@@ -220,6 +223,13 @@
                 </div>
                 <div class="modal-body">
                     <p id="passwordError" class="text-danger" style="display: none;"></p>
+                    
+                    <div id="facial-register-container" style="text-align: center; display: none;">
+                        <p id="register-status-message" class="text-muted">Posicione seu rosto para o cadastro.</p>
+                        <video id="webcam-register-video" width="250" height="188" autoplay class="rounded mb-3"></video>
+                        <button type="button" class="btn btn-info w-100 mb-3" id="capture-face-btn">Capturar Rosto</button>
+                    </div>
+
                     <form id="addUserForm">
                         <div class="form-floating mb-3">
                             <input type="text" class="form-control" id="nomeCompleto" placeholder="Seu nome completo" required>
@@ -240,6 +250,7 @@
                         <div class="d-grid">
                             <button type="submit" class="btn btn-primary">Cadastrar</button>
                         </div>
+                        <input type="hidden" id="faceEmbeddingInput" name="faceEmbedding" value="">
                     </form>
                 </div>
             </div>

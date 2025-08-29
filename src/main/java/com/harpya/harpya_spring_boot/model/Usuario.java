@@ -39,6 +39,9 @@ public class Usuario {
     @Column(name = "ativo")
     private int ativo;
 
+    @Column(name = "face_embedding", length = 2048)
+    private String faceEmbedding;
+    
     @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_endereco", referencedColumnName = "id")
     private Endereco enderecoUsuario;
@@ -51,13 +54,14 @@ public class Usuario {
 
     public Usuario() {}
 
-    public Usuario(int id, String nomeUsuario, String emailUsuario, String senha_hash, int ativo, Endereco enderecoUsuario) {
+    public Usuario(int id, String nomeUsuario, String emailUsuario, String senha_hash, int ativo, Endereco enderecoUsuario, String FaceEmbedding) {
         this.id = id;
         this.nomeUsuario = nomeUsuario;
         this.emailUsuario = emailUsuario;
         this.senha_hash = senha_hash;
         this.ativo = ativo;
         this.enderecoUsuario = enderecoUsuario;
+        this.faceEmbedding = faceEmbedding;
     }
 
     // Getters e Setters
@@ -124,5 +128,13 @@ public class Usuario {
 
     public void setLocalizacao(String localizacao) {
         this.localizacao = localizacao;
+    }
+    
+    public String getFaceEmbedding() {
+        return faceEmbedding;
+    }
+
+    public void setFaceEmbedding(String faceEmbedding) {
+        this.faceEmbedding = faceEmbedding;
     }
 }
